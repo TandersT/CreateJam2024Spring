@@ -50,4 +50,13 @@ public static class Global
             OnMenuStateChangedDelegate?.Invoke(value);
         }
     }
+
+    
+    public delegate void InteractDelegate(Npc npc);
+    public static event InteractDelegate OnInteractDelegate;
+    public static void OnInteract (Npc value) =>OnInteractDelegate?.Invoke(value);
+
+    public static List<Npc> AllNpcs =  new List<Npc>();
+
+    public static Player Player; 
 }

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3in726u7mqpx"]
+
+[ext_resource type="Texture2D" uid="uid://ciffox4m7t3yd" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/red_character.png" id="1_5c7jr"]
+[ext_resource type="Script" path="res://Assets/Entities/NPC/Npc.cs" id="1_fwa7v"]
+[ext_resource type="Texture2D" uid="uid://jwuk2e1owpdr" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/green_hand.png" id="2_2xpvv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gl8ut"]
+radius = 20.0
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_fwa7v")
+
+[node name="GreenCharacter" type="Sprite2D" parent="."]
+texture = ExtResource("1_5c7jr")
+
+[node name="GreenHand" type="Sprite2D" parent="GreenCharacter"]
+position = Vector2(53, 1)
+texture = ExtResource("2_2xpvv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gl8ut")

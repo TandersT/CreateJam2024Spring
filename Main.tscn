@@ -1,3 +1,12 @@
-[gd_scene format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=3 format=3 uid="uid://tmrajk2wp86o"]
 
-[node name="Main" type="Node3D"]
+[ext_resource type="PackedScene" uid="uid://c3in726u7mqpx" path="res://Assets/Entities/NPC/Npc.tscn" id="1_muci2"]
+[ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
+
+[node name="Main" type="Node2D"]
+
+[node name="NPC" parent="." instance=ExtResource("1_muci2")]
+position = Vector2(729, 308)
+
+[node name="Player" parent="." instance=ExtResource("2_cp46j")]
+position = Vector2(425, 236)
