@@ -207,7 +207,6 @@ public partial class DialogueUI : Control, IResetable
 			dialogieInProcess = false;
 		};
 		CutsceneLabel.Text = text;
-		CutsceneLabel.GrabFocus();
 	}
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cq5m8neexys8g"]
+[gd_scene load_steps=9 format=3 uid="uid://cwxvvd6enctt7"]
 
 [ext_resource type="Script" path="res://Assets/Entities/SkillSlider/SkillSlider.cs" id="1_2yopj"]
 [ext_resource type="Texture2D" uid="uid://bqfhj3afsavtw" path="res://Assets/Entities/SkillSlider/Audio.png" id="2_fj0jw"]
@@ -33,6 +33,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_vertical = 3
+focus_mode = 0
 mouse_filter = 2
 theme_override_icons/grabber = SubResource("PlaceholderTexture2D_gexu0")
 theme_override_icons/grabber_highlight = SubResource("PlaceholderTexture2D_gexu0")
