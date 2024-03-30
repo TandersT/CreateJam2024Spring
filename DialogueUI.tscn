@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmwnlec6crwfi"]
+[gd_scene load_steps=6 format=3 uid="uid://gkvvg4onvdw"]
 
 [ext_resource type="Script" path="res://DialogueUI.cs" id="1_5yxoq"]
 [ext_resource type="FontFile" uid="uid://d257fd73snfk3" path="res://Assets/Fonts/Bleeding_Cowboys.ttf" id="2_s0yp3"]
-[ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_wvvwv"]
+[ext_resource type="StyleBox" path="res://Empty.tres" id="2_wvvwv"]
 [ext_resource type="FontFile" uid="uid://d3j1o50nmnjlc" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="3_2ndkn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsen0"]
@@ -70,6 +70,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../Pry")
 theme_override_font_sizes/font_size = 74
 text = "Don't
 Pry"
@@ -94,6 +95,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 size_flags_vertical = 4
+focus_neighbor_right = NodePath("../DontPry")
 theme_override_font_sizes/font_size = 74
 text = "Pry"
 

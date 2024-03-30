@@ -80,13 +80,13 @@ public partial class Player : CharacterBody2D, IResetable
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event.IsActionReleased("Dash") && canDash)
+        if (@event.IsActionPressed("Dash") && canDash)
         {
             activeDashSpeed = DashSpeed;
             canDash = false;
             CreateTween().TweenInterval(0.33f).Finished += () => canDash = true;
         }
-        if (@event.IsActionReleased("Interact"))
+        if (@event.IsActionPressed("Interact"))
         {
             if (Global.GameState == GameStateEnum.TalkingPhase)
             {

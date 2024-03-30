@@ -4,38 +4,6 @@ using System.Collections.Generic;
 
 public class ProgrammerRole : SharedRole
 {
-	public override List<string> Greetings { get; set; } = new List<string>
-{
-	"Hey there!",
-	"Greetings, friend!",
-	"Good day to you!",
-	"Well met!",
-	"Howdy, partner!",
-	"Salutations!",
-	"Yo!",
-	"Hello and welcome!",
-	"Nice to see you!",
-	"Hola amigo!",
-	"Bonjour!",
-	"Ciao!",
-	"Namaste!",
-	"Shalom!",
-	"G'day mate!",
-	"Hiya!",
-	"Hey!",
-	"Heya!",
-	"Greetings and salutations!",
-	"Good to have you here!"
-};
-
-	public override List<string> HasInteracted { get; set; } = new List<string>
-	{
-		"Frick off",
-		"u are dumb",
-		"no talk more",
-		"get reckt",
-		"u dumb",
-	};
 	public override List<string> Novice { get; set; } = new List<string>
 	{
 		"I’ve been delving into programming lately.",

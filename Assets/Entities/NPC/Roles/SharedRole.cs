@@ -3,7 +3,6 @@ using System.Formats.Asn1;
 
 public abstract class SharedRole : IProficienct
 {
-    public abstract List<string> HasInteracted { get; set; }
     public List<string> General { get; set; } = new List<string>
 {
     "I’ve been wondering a lot lately: How do bats piss upside down?",
@@ -19,7 +18,39 @@ public abstract class SharedRole : IProficienct
     "Can you feel it? A sudden urge for ice cream. No? Is it just me?",
     "I wonder what it is like working in a submarine…"
 };
-    public abstract List<string> Greetings { get; set; }
+    public List<string> Greetings { get; set; } = new List<string>
+{
+	"Hey there!",
+	"Greetings, friend!",
+	"Good day to you!",
+	"Well met!",
+	"Howdy, partner!",
+	"Salutations!",
+	"Yo!",
+	"Hello and welcome!",
+	"Nice to see you!",
+	"Hola amigo!",
+	"Bonjour!",
+	"Ciao!",
+	"Namaste!",
+	"Shalom!",
+	"G'day mate!",
+	"Hiya!",
+	"Hey!",
+	"Heya!",
+	"Greetings and salutations!",
+	"Good to have you here!"
+};
+
+	public List<string> HasInteracted { get; set; } = new List<string>
+	{
+		"Frick off",
+		"u are dumb",
+		"no talk more",
+		"get reckt",
+		"u dumb",
+	};
+
     public abstract List<string> Novice { get; set; }
     public abstract List<string> Intermediate { get; set; }
     public abstract List<string> Expert { get; set; }

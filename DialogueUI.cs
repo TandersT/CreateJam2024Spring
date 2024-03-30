@@ -59,7 +59,20 @@ public partial class DialogueUI : Control, IResetable
 
 	}
 
-	private void OnGamestateChanged(GameStateEnum gameState)
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("B Controller"))
+		{
+			Pry.ButtonPressed = true;
+			KillButton.ButtonPressed = true;
+		}
+		if (@event.IsActionPressed("A Conntroller"))
+		{
+			DontPry.ButtonPressed = true;
+		}
+    }
+
+    private void OnGamestateChanged(GameStateEnum gameState)
 	{
 		PryContainer.Hide();
 		KillContainer.Hide();
