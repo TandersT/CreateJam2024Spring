@@ -10,7 +10,8 @@ public enum GameStateEnum
     TalkingPhase,
     KillingPhase,
     KillingSelected,
-    EndCutscene,
+    EndCutsceneWin,
+    EndCutsceneLose,
     End,
     RoundFinished,
 

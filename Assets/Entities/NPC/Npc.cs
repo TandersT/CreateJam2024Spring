@@ -64,8 +64,10 @@ public partial class Npc : CharacterBody2D
 
     List<string> animations = new()
     {
-        "wizard",
-        "orc",
+        "1",
+        "2",
+        "3",
+        "4",
     };
 
 

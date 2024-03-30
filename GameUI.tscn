@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bgx4gkbmlcro"]
+[gd_scene load_steps=22 format=3 uid="uid://bgx4gkbmlcro"]
 
 [ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
 [ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogueUI.tscn" id="2_04tq2"]
@@ -6,10 +6,12 @@
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="3_wy38x"]
 [ext_resource type="PackedScene" uid="uid://cq5m8neexys8g" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
 [ext_resource type="Script" path="res://SkillContainer.cs" id="5_m6j0r"]
+[ext_resource type="Texture2D" uid="uid://67mrd3rlfvqb" path="res://Assets/Cutscenes/Devil2.png" id="6_a0j35"]
 [ext_resource type="Script" path="res://Intro.cs" id="7_2b4le"]
 [ext_resource type="Shader" path="res://Assets/Cutscenes/CutseneShader.gdshader" id="7_txn2p"]
 [ext_resource type="Texture2D" uid="uid://c2e0udqu7rakp" path="res://Assets/Cutscenes/template.png" id="8_0rxxo"]
-[ext_resource type="Texture2D" uid="uid://y4hxv8p2uk5i" path="res://Assets/Cutscenes/devil.png" id="8_xrff6"]
+[ext_resource type="Script" path="res://OutroWin.cs" id="8_hwcj1"]
+[ext_resource type="Script" path="res://OutroLose.cs" id="9_a0m1m"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
 
@@ -22,6 +24,9 @@ expand_margin_bottom = 25.0
 bg_color = Color(1, 0.8, 0.207843, 1)
 expand_margin_top = 25.0
 expand_margin_bottom = 25.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ewp3"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pwt6y"]
 shader = ExtResource("3_wy38x")
@@ -71,7 +76,7 @@ shader = ExtResource("7_txn2p")
 shader_parameter/position = Vector2(0, 0)
 shader_parameter/zoom = 0.6
 shader_parameter/size = 1.0
-shader_parameter/hidden_texture = ExtResource("8_xrff6")
+shader_parameter/hidden_texture = ExtResource("6_a0j35")
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -85,7 +90,6 @@ script = ExtResource("1_juhkf")
 
 [node name="TalkingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,6 +117,10 @@ theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_t2v4h")
 max_value = 90.0
 step = 0.01
 value = 90.0
+
+[node name="DaysLeft" type="PanelContainer" parent="TalkingPhase"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ewp3")
 
 [node name="KillingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -146,6 +154,7 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_vs0ux")
 
 [node name="Intro" type="PanelContainer" parent="Cutscenes"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_vs0ux")
 script = ExtResource("7_2b4le")
@@ -155,8 +164,35 @@ material = SubResource("ShaderMaterial_vefga")
 layout_mode = 2
 texture = ExtResource("8_0rxxo")
 
-[node name="AdvanceCutscene" type="TextureButton" parent="Cutscenes"]
-unique_name_in_owner = true
+[node name="AdvanceButton" type="TextureButton" parent="Cutscenes/Intro"]
+layout_mode = 2
+
+[node name="OutroWin" type="PanelContainer" parent="Cutscenes"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+script = ExtResource("8_hwcj1")
+
+[node name="ColorRect" type="TextureRect" parent="Cutscenes/OutroWin"]
+material = SubResource("ShaderMaterial_vefga")
+layout_mode = 2
+texture = ExtResource("8_0rxxo")
+
+[node name="AdvanceButton" type="TextureButton" parent="Cutscenes/OutroWin"]
+layout_mode = 2
+
+[node name="OutroLose" type="PanelContainer" parent="Cutscenes"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+script = ExtResource("9_a0m1m")
+
+[node name="ColorRect" type="TextureRect" parent="Cutscenes/OutroLose"]
+material = SubResource("ShaderMaterial_vefga")
+layout_mode = 2
+texture = ExtResource("8_0rxxo")
+
+[node name="AdvanceButton" type="TextureButton" parent="Cutscenes/OutroLose"]
 layout_mode = 2
 
 [node name="DialogueUI" parent="." instance=ExtResource("2_04tq2")]

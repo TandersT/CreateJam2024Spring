@@ -20,8 +20,7 @@ public partial class Intro : PanelContainer
 		};
 
 	public int index;
-
-	public TextureButton advance => GetNode<TextureButton>("%AdvanceCutscene");
+	public TextureButton advance => GetNode<TextureButton>("AdvanceButton");
 	public override void _Ready()
 	{
 		Global.OnGameStateChangedDelegate += OnGamestateChanged;
