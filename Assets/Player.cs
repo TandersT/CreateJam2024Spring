@@ -16,6 +16,19 @@ public partial class Player : CharacterBody2D
         Global.Player = this;
     }
 
+    public override void _Process(double delta)
+    {
+        Global.AllNpcs.Where(x => x.Position.DistanceSquaredTo(this.Position) >= Global.MaxDistanceToNpc).ToList().ForEach(x => x.RangeStatus = RangeStatusEnum.Outside);
+        var npcsInRange = Global.AllNpcs.Where(x => x.Position.DistanceSquaredTo(this.Position) < Global.MaxDistanceToNpc).OrderBy(x => x.Position.DistanceSquaredTo(this.Position));
+        var closest = npcsInRange.FirstOrDefault();
+        var rest = npcsInRange.Where(x => x != closest).ToList();
+        if (closest != null)
+        {
+            closest.RangeStatus = RangeStatusEnum.InsideFocus;
+        }
+        rest.ForEach(x => x.RangeStatus = RangeStatusEnum.InsideUnfocus);
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
@@ -36,8 +49,9 @@ public partial class Player : CharacterBody2D
         activeDashSpeed = activeDashSpeed * DashTaperSpeed;
         var movementSpeed = movementDirection * (Speed + activeDashSpeed) * (float)delta;
 
-        MoveAndCollide(movementSpeed);
-
+        // MoveAndCollide(movementSpeed);
+        Velocity = movementSpeed * 50;
+        MoveAndSlide();
         LookAt(GetGlobalMousePosition());
     }
 
@@ -60,9 +74,6 @@ public partial class Player : CharacterBody2D
 
     Npc GetClosestNpc()
     {
-        return Global.AllNpcs.
-            Where(x => x.Position.DistanceSquaredTo(this.Position) < 10000).
-            OrderBy(x => x.Position.DistanceSquaredTo(this.Position)).
-            FirstOrDefault();
+        return Global.AllNpcs.Where(x => x.RangeStatus == RangeStatusEnum.InsideFocus).FirstOrDefault();
     }
 }

@@ -1,21 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3in726u7mqpx"]
+[gd_scene load_steps=7 format=3 uid="uid://c3in726u7mqpx"]
 
 [ext_resource type="Texture2D" uid="uid://ciffox4m7t3yd" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/red_character.png" id="1_5c7jr"]
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Npc.cs" id="1_fwa7v"]
-[ext_resource type="Texture2D" uid="uid://jwuk2e1owpdr" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/green_hand.png" id="2_2xpvv"]
+[ext_resource type="Texture2D" uid="uid://d1wj3ltnqkgpi" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/purple_character.png" id="2_iiexu"]
+[ext_resource type="Texture2D" uid="uid://30niwrobq08f" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/yellow_character.png" id="4_dgar1"]
+[ext_resource type="Material" uid="uid://dcrrtt4ys5t5" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gl8ut"]
 radius = 20.0
 
 [node name="NPC" type="CharacterBody2D"]
 script = ExtResource("1_fwa7v")
+NpcIcons = Array[Texture2D]([ExtResource("2_iiexu"), ExtResource("1_5c7jr"), ExtResource("4_dgar1")])
 
-[node name="GreenCharacter" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = ExtResource("5_tf5by")
 texture = ExtResource("1_5c7jr")
-
-[node name="GreenHand" type="Sprite2D" parent="GreenCharacter"]
-position = Vector2(53, 1)
-texture = ExtResource("2_2xpvv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gl8ut")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+offset_left = -100.0
+offset_top = 27.0
+offset_right = 100.0
+offset_bottom = 77.0
+
+[node name="RoleLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "@ROLE@"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProficiencyLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "@PROFICIENCY@"
+horizontal_alignment = 1
+vertical_alignment = 1

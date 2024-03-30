@@ -51,12 +51,14 @@ public static class Global
         }
     }
 
-    
+    public static float MaxDistanceToNpc { get; internal set; } = 20000f;
+    public static double RoundDuration { get; internal set; } = 90;
+
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;
-    public static void OnInteract (Npc value) =>OnInteractDelegate?.Invoke(value);
+    public static void OnInteract(Npc value) => OnInteractDelegate?.Invoke(value);
 
-    public static List<Npc> AllNpcs =  new List<Npc>();
+    public static List<Npc> AllNpcs = new List<Npc>();
 
-    public static Player Player; 
+    public static Player Player;
 }

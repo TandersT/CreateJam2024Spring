@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgx4gkbmlcro"]
+
+[ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwsvr"]
+bg_color = Color(0.890196, 0.890196, 0.890196, 0)
+expand_margin_top = 25.0
+expand_margin_bottom = 25.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2v4h"]
+bg_color = Color(1, 0.8, 0.207843, 1)
+expand_margin_top = 25.0
+expand_margin_bottom = 25.0
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_juhkf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="TimerSlider" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 2
+theme_override_icons/grabber = SubResource("PlaceholderTexture2D_gexu0")
+theme_override_icons/grabber_highlight = SubResource("PlaceholderTexture2D_gexu0")
+theme_override_icons/grabber_disabled = SubResource("PlaceholderTexture2D_gexu0")
+theme_override_icons/tick = SubResource("PlaceholderTexture2D_gexu0")
+theme_override_styles/slider = SubResource("StyleBoxFlat_hwsvr")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_t2v4h")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_t2v4h")
+max_value = 90.0
+step = 0.01
+value = 90.0
