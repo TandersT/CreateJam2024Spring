@@ -6,10 +6,14 @@ public enum GameStateEnum
 {
     NaN,
     Idle,
+    IntroCutscene,
     TalkingPhase,
     KillingPhase,
     KillingSelected,
+    EndCutscene,
     End,
+    RoundFinished,
+
 }
 
 public enum MenuStateEnum
@@ -55,11 +59,14 @@ public static class Global
     public static List<Vector2> SpawnablePositions = new List<Vector2>();
 
     public static float MaxDistanceToNpc { get; internal set; } = 20000f;
-    public static double RoundDuration { get; internal set; } = 10;
+    public static double RoundDuration { get; internal set; } = 20;
+    public static int RoundCount = 3;
     public static DialogueUI DialogueUI { get; internal set; }
     public static SkillContainer SkillContainer { get; internal set; }
     public static NpcContainer NpcContatainer { get; internal set; }
     public static GameUI GameUI { get; internal set; }
+    public static int MaxRoundCount { get; internal set; } = 3;
+
 
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;

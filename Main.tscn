@@ -482,7 +482,6 @@ sources/2 = SubResource("TileSetAtlasSource_a84o2")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_e7lxd")
-Quickstart = true
 
 [node name="BG" type="TileMap" parent="."]
 scale = Vector2(2, 2)
@@ -494,8 +493,7 @@ layer_1/name = "Assets"
 layer_1/tile_data = PackedInt32Array(327692, 851970, 0, 327682, 851970, 0, 131084, 851970, 0, 131074, 851970, 0, 131075, 851970, 0, 327683, 851970, 0, 327691, 851970, 0, 131083, 851970, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_cp46j")]
-position = Vector2(425, 236)
-scale = Vector2(2, 2)
+position = Vector2(997, 554)
 Speed = 400
 
 [node name="SpawnablePositions" type="Node2D" parent="."]
@@ -587,7 +585,6 @@ offset_bottom = 40.0
 script = ExtResource("5_yvwrj")
 
 [node name="GameUI" parent="UI" instance=ExtResource("4_resir")]
-visible = false
 layout_mode = 1
 
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]

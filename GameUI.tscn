@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgx4gkbmlcro"]
+[gd_scene load_steps=19 format=3 uid="uid://bgx4gkbmlcro"]
 
 [ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
 [ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogueUI.tscn" id="2_04tq2"]
@@ -6,6 +6,10 @@
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="3_wy38x"]
 [ext_resource type="PackedScene" uid="uid://cq5m8neexys8g" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
 [ext_resource type="Script" path="res://SkillContainer.cs" id="5_m6j0r"]
+[ext_resource type="Script" path="res://Intro.cs" id="7_2b4le"]
+[ext_resource type="Shader" path="res://Assets/Cutscenes/CutseneShader.gdshader" id="7_txn2p"]
+[ext_resource type="Texture2D" uid="uid://c2e0udqu7rakp" path="res://Assets/Cutscenes/template.png" id="8_0rxxo"]
+[ext_resource type="Texture2D" uid="uid://y4hxv8p2uk5i" path="res://Assets/Cutscenes/devil.png" id="8_xrff6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
 
@@ -62,6 +66,13 @@ _data = {
 "RESET": SubResource("Animation_u7ci5")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vefga"]
+shader = ExtResource("7_txn2p")
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/zoom = 0.6
+shader_parameter/size = 1.0
+shader_parameter/hidden_texture = ExtResource("8_xrff6")
+
 [node name="GameUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -74,6 +85,7 @@ script = ExtResource("1_juhkf")
 
 [node name="TalkingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -104,6 +116,7 @@ value = 90.0
 
 [node name="KillingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,6 +136,29 @@ libraries = {
 autoplay = "Heartbeat"
 speed_scale = 0.5
 
+[node name="Cutscenes" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+
+[node name="Intro" type="PanelContainer" parent="Cutscenes"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+script = ExtResource("7_2b4le")
+
+[node name="ColorRect" type="TextureRect" parent="Cutscenes/Intro"]
+material = SubResource("ShaderMaterial_vefga")
+layout_mode = 2
+texture = ExtResource("8_0rxxo")
+
+[node name="AdvanceCutscene" type="TextureButton" parent="Cutscenes"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="DialogueUI" parent="." instance=ExtResource("2_04tq2")]
 layout_mode = 1
 
@@ -140,11 +176,14 @@ script = ExtResource("5_m6j0r")
 [node name="ProgrammerSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
 unique_name_in_owner = true
 layout_mode = 2
+Role = 1
 
 [node name="AudioSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
 unique_name_in_owner = true
 layout_mode = 2
+Role = 2
 
 [node name="GraphicsSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
 unique_name_in_owner = true
 layout_mode = 2
+Role = 3

@@ -34,24 +34,39 @@ public enum InteractionStatusEnum
     Interacted,
 }
 
+public enum CommuncationTypeEnum
+{
+    Greeting,
+    General,
+    Role,
+    Proficiency,
+}
+
 public partial class Npc : CharacterBody2D
 {
-    [Export]
-    Texture2D[] NpcIcons;
     RoleEnum Role;
     ProficiencyEnum Proficiency;
 
     public InteractionStatusEnum InteractionStatus = InteractionStatusEnum.NoInteraction;
-    // string NPCName;
+
+    public List<CommuncationTypeEnum> FilledCommuncationTypes = new()
+    {
+        CommuncationTypeEnum.Greeting
+    };
     public List<string> IgnoreLines = new();
     public List<string> Lines = new();
     public int lineIndex = 0;
 
     Label RoleLabel => GetNode<Label>("%RoleLabel");
     Label ProficiencyLabel => GetNode<Label>("%ProficiencyLabel");
-    Sprite2D Icon => GetNode<Sprite2D>("%Icon");
+    AnimatedSprite2D Icon => GetNode<AnimatedSprite2D>("%Icon");
     NavigationAgent2D Navigation => GetNode<NavigationAgent2D>("%NavigationAgent2D");
 
+    List<string> animations = new()
+    {
+        "wizard",
+        "orc",
+    };
 
 
     RangeStatusEnum rangeStatus = RangeStatusEnum.Outside;
@@ -75,6 +90,8 @@ public partial class Npc : CharacterBody2D
         if (Role == RoleEnum.Peasent)
         {
             Proficiency = ProficiencyEnum.None;
+            FilledCommuncationTypes.Add(CommuncationTypeEnum.Role);
+            FilledCommuncationTypes.Add(CommuncationTypeEnum.Proficiency);
         }
         else
         {
@@ -84,11 +101,12 @@ public partial class Npc : CharacterBody2D
         RoleLabel.Text = Role.ToString();
         ProficiencyLabel.Text = Proficiency.ToString();
 
-        var icon = Helper.RandomInt(0, NpcIcons.Length);
-        Icon.Texture = NpcIcons[icon];
+        Icon.Animation = animations[Helper.RandomInt(0, animations.Count)];
 
         OutlineMaterial = (ShaderMaterial)Icon.Material.Duplicate();
         Icon.Material = OutlineMaterial;
+
+        Icon.Play();
 
         SetupLines();
 
@@ -125,51 +143,31 @@ public partial class Npc : CharacterBody2D
     public void GetLines(IProficienct iProfcient)
     {
 
-        var availableLines = new List<string>();
-        if (Proficiency == ProficiencyEnum.None)
+        var greetingLines = new List<string>(iProfcient.Greetings);
+        var generalLines = new List<string>(iProfcient.General);
+        var proficiencyLines = new List<string>();
+        var roleLines = new List<string>(iProfcient.Role);
+        switch (Proficiency)
         {
-            availableLines =  new List<string>(iProfcient.Novice);
-        }
-        else
-        {
-            switch (Proficiency)
-            {
-                case ProficiencyEnum.Novice:
-                    {
-                        availableLines =  new List<string>(iProfcient.Novice);
-                        break;
-                    }
-                case ProficiencyEnum.Intermediate:
-                    {
-                        availableLines =  new List<string>(iProfcient.Intermediate);
-                        break;
-                    }
-                case ProficiencyEnum.Expert:
-                    {
-                        availableLines =  new List<string>(iProfcient.Expert);
-                        break;
-                    }
-            }
+            case ProficiencyEnum.Novice:
+                proficiencyLines = new List<string>(iProfcient.Novice);
+                break;
+            case ProficiencyEnum.Intermediate:
+                proficiencyLines = new List<string>(iProfcient.Intermediate);
+                break;
+            case ProficiencyEnum.Expert:
+                proficiencyLines = new List<string>(iProfcient.Expert);
+                break;
         }
 
         for (int i = 0; i < 5; i++)
         {
-            if (i == 0)
-            {
-                var index = Helper.RandomInt(0, iProfcient.Greetings.Count);
-                var text = iProfcient.Greetings[index];
-                Lines.Add(text);
-                continue;
-            }
+            var list = SetupDialog(i, generalLines, greetingLines, proficiencyLines, roleLines);
+            var index = Helper.RandomInt(0, list.Count);
 
+            Lines.Add(list[index]);
 
-            {
-                var index = Helper.RandomInt(0, availableLines.Count);
-
-                Lines.Add(availableLines[index]);
-
-                availableLines.RemoveAt(index);
-            }
+            list.RemoveAt(index);
         }
 
         List<string> availableIgnoreLines = new List<string>(iProfcient.HasInteracted);
@@ -197,37 +195,29 @@ public partial class Npc : CharacterBody2D
         // Navigation.Velocity = new_velocity;
 
     }
-    // public void DialogDecider()
-    // {
-    //     //Decides what type of info is given
-    //     int randomNumber = GD.RandRange(0, 100);
-    //     if (FirstInteract == true)
-    //     {
-    //         if (randomNumber < 70)
-    //         {
-    //             //Normal Greeting
-    //         }
-    //     }
-    //     else
-    //     {
-    //         if (randomNumber < 25)
-    //         {
-    //             //Give general info
-    //         }
-    //         else if (randomNumber >= 25 && randomNumber < 50)
-    //         {
-    //             //Give role Info
-    //         }
-    //         else if (randomNumber >= 50 && randomNumber < 75)
-    //         {
-    //             //Give proficiency Info
-    //         }
-    //         else
-    //         {
-    //             //Give Info on project
-    //         }
-    //     }
-    // }
+    public List<string> SetupDialog(int index, List<string> general, List<string> greeting, List<string> proficiency, List<string> role)
+    {
+        CommuncationTypeEnum chosenType = Helper.GetRandomEnumValue<CommuncationTypeEnum>(FilledCommuncationTypes.ToArray());
+        if (index == 0)
+        {
+            chosenType = Helper.RandomFloat(0, 1f) > 0.7f ? CommuncationTypeEnum.Greeting : chosenType;
+        }
+        switch (chosenType)
+        {
+            case CommuncationTypeEnum.Greeting:
+                FilledCommuncationTypes.Add(CommuncationTypeEnum.Greeting);
+                return greeting;
+            case CommuncationTypeEnum.General:
+                return general;
+            case CommuncationTypeEnum.Role:
+                FilledCommuncationTypes.Add(CommuncationTypeEnum.Role);
+                return role;
+            case CommuncationTypeEnum.Proficiency:
+                FilledCommuncationTypes.Add(CommuncationTypeEnum.Proficiency);
+                return proficiency;
+        }
+        return general;
+    }
 
     public void RangeStatusUpdated()
     {

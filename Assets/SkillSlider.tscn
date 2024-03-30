@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cq5m8neexys8g"]
+[gd_scene load_steps=9 format=3 uid="uid://cq5m8neexys8g"]
 
 [ext_resource type="Script" path="res://Assets/Entities/SkillSlider/SkillSlider.cs" id="1_2yopj"]
 [ext_resource type="Texture2D" uid="uid://bqfhj3afsavtw" path="res://Assets/Entities/SkillSlider/Audio.png" id="2_fj0jw"]
+[ext_resource type="Texture2D" uid="uid://eirt5g1vveoy" path="res://Assets/Entities/SkillSlider/Coding.png" id="2_n45hp"]
+[ext_resource type="Texture2D" uid="uid://da20xdjlxnk6g" path="res://Assets/Entities/SkillSlider/Graphics.png" id="4_sk3o1"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
 
@@ -22,6 +24,9 @@ expand_margin_bottom = 25.0
 
 [node name="SkillSlider" type="VBoxContainer"]
 script = ExtResource("1_2yopj")
+programmerTexture = ExtResource("2_n45hp")
+audioTexture = ExtResource("2_fj0jw")
+graphicsTexture = ExtResource("4_sk3o1")
 
 [node name="Slider" type="VSlider" parent="."]
 unique_name_in_owner = true

@@ -6,10 +6,12 @@ public partial class DialogueUI : Control, IResetable
 	VBoxContainer DialogueContainer => GetNode<VBoxContainer>("%DialogueContainer");
 	Label DialougeLabel => GetNode<Label>("%DialougeLabel");
 	RichTextLabel KillLabel => GetNode<RichTextLabel>("%KillLabel");
-	TextureButton KillButton => GetNode<TextureButton>("%KillButton");
+	Button KillButton => GetNode<Button>("%KillButton");
+	RichTextLabel CutsceneLabel => GetNode<RichTextLabel>("%CutsceneLabel");
 
 	HBoxContainer PryContainer => GetNode<HBoxContainer>("%PryContainer");
 	HBoxContainer KillContainer => GetNode<HBoxContainer>("%KillContainer");
+	HBoxContainer CutsceneContainer => GetNode<HBoxContainer>("%CutsceneContainer");
 
 	Button Pry => GetNode<Button>("%Pry");
 	Button DontPry => GetNode<Button>("%DontPry");
@@ -28,14 +30,10 @@ public partial class DialogueUI : Control, IResetable
 		Global.DialogueUI = this;
 		Pry.Pressed += () =>
 		{
-			Pry.Disabled = true;
-			DontPry.Disabled = true;
 			NpcDialogue();
 		};
 		DontPry.Pressed += () =>
 		{
-			Pry.Disabled = true;
-			DontPry.Disabled = true;
 			ActiveNpc.InteractionStatus = InteractionStatusEnum.Interacted;
 			Reset();
 		};
@@ -44,8 +42,17 @@ public partial class DialogueUI : Control, IResetable
 		{
 			ActiveNpc.OnKilled();
 			Global.GameState = GameStateEnum.KillingSelected;
-			CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.End;
-			CreateTween().TweenInterval(3).Finished += () => Global.GameState = GameStateEnum.TalkingPhase;
+			if (Global.RoundCount < Global.MaxRoundCount)
+			{
+				CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.RoundFinished;
+				CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.TalkingPhase;
+				Global.RoundCount++;
+			}
+			else
+			{
+				CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.RoundFinished;
+				CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.End;
+			}
 		};
 
 		Global.OnGameStateChangedDelegate += OnGamestateChanged;
@@ -56,6 +63,7 @@ public partial class DialogueUI : Control, IResetable
 	{
 		PryContainer.Hide();
 		KillContainer.Hide();
+		CutsceneContainer.Hide();
 		if (gameState == GameStateEnum.TalkingPhase)
 		{
 			Reset();
@@ -66,11 +74,19 @@ public partial class DialogueUI : Control, IResetable
 			Reset();
 			KillContainer.Show();
 		}
+		if (gameState == GameStateEnum.IntroCutscene)
+		{
+			Reset();
+			CutsceneContainer.Show();
+		}
 	}
 
 
 	public void Reset()
 	{
+		Pry.Disabled = true;
+		DontPry.Disabled = true;
+
 		DialogueContainer.Modulate = DialogueContainer.Modulate with { A = 0 };
 
 		ResetDialogue();
@@ -82,11 +98,14 @@ public partial class DialogueUI : Control, IResetable
 		DialougeLabel.Text = "";
 		DialougeLabel.VisibleRatio = 0;
 		KillLabel.VisibleRatio = 0;
-
+		CutsceneLabel.VisibleRatio = 0;
 		dialogieInProcess = false;
 
 		DontPry.Modulate = DontPry.Modulate with { A = 0 };
 		Pry.Modulate = Pry.Modulate with { A = 0 };
+		Pry.Disabled = true;
+		DontPry.Disabled = true;
+
 
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -104,6 +123,14 @@ public partial class DialogueUI : Control, IResetable
 		{
 			tween.Finished += ShowKillDialoge;
 		}
+	}
+
+	public Tween PrepareCutscene()
+	{
+		MenuOpen = true;
+		var tween = CreateTween();
+		tween.TweenProperty(DialogueContainer, "modulate:a", 1, duration);
+		return tween;
 	}
 
 	public void NpcDialogue()
@@ -142,6 +169,24 @@ public partial class DialogueUI : Control, IResetable
 			DontPry.Disabled = false;
 		};
 		DialougeLabel.Text = text;
+	}
+
+	public void ShowCutsceneDialogue(string text)
+	{
+		ResetDialogue();
+		if (dialogieInProcess)
+		{
+			return;
+		}
+		dialogieInProcess = true;
+
+		var tween = CreateTween();
+		tween.TweenProperty(CutsceneLabel, "visible_ratio", 1, text.Length/50f);
+		tween.Finished += () =>
+		{
+			dialogieInProcess = false;
+		};
+		CutsceneLabel.Text = text;
 	}
 
 

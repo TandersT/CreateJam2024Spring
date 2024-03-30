@@ -1,8 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmwnlec6crwfi"]
+[gd_scene load_steps=6 format=3 uid="uid://dmwnlec6crwfi"]
 
 [ext_resource type="Script" path="res://DialogueUI.cs" id="1_5yxoq"]
 [ext_resource type="FontFile" uid="uid://d257fd73snfk3" path="res://Assets/Fonts/Bleeding_Cowboys.ttf" id="2_s0yp3"]
 [ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_wvvwv"]
+[ext_resource type="FontFile" uid="uid://d3j1o50nmnjlc" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="3_2ndkn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsen0"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 0.607843)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [node name="DialogueUI" type="Control"]
 layout_mode = 3
@@ -22,23 +36,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer"]
-custom_minimum_size = Vector2(0, 300)
+[node name="MarginContainer" type="MarginContainer" parent="DialogueContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 25
 
-[node name="MarginContainer" type="MarginContainer" parent="DialogueContainer/PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_wvvwv")
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tsen0")
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 
-[node name="PryContainer" type="HBoxContainer" parent="DialogueContainer/PanelContainer/MarginContainer"]
+[node name="PryContainer" type="HBoxContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="DontPry" type="Button" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+[node name="DontPry" type="Button" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/PryContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
@@ -47,12 +74,12 @@ theme_override_font_sizes/font_size = 74
 text = "Don't
 Pry"
 
-[node name="CenterContainer" type="CenterContainer" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/PryContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 
-[node name="DialougeLabel" type="Label" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer/CenterContainer"]
+[node name="DialougeLabel" type="Label" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/PryContainer/CenterContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
@@ -62,7 +89,7 @@ text = "asdasd"
 autowrap_mode = 3
 visible_characters_behavior = 1
 
-[node name="Pry" type="Button" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+[node name="Pry" type="Button" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/PryContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
@@ -70,28 +97,53 @@ size_flags_vertical = 4
 theme_override_font_sizes/font_size = 74
 text = "Pry"
 
-[node name="KillContainer" type="HBoxContainer" parent="DialogueContainer/PanelContainer/MarginContainer"]
+[node name="CutsceneContainer" type="HBoxContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CutsceneLabel" type="RichTextLabel" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/CutsceneContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_fonts/normal_font = ExtResource("3_2ndkn")
+theme_override_fonts/bold_font = ExtResource("3_2ndkn")
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "[center][b]Devil:[/b] Ah, a weary soul, cloaked in the glow of a monitor. What keeps you up at this hour, [b]programmer[/b]?[/center]"
+fit_content = true
+scroll_active = false
+visible_characters_behavior = 1
+
+[node name="KillContainer" type="HBoxContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/KillContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_wvvwv")
 
-[node name="KillLabel" type="RichTextLabel" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
+[node name="KillButton" type="Button" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="KillLabel" type="RichTextLabel" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 theme_override_colors/default_color = Color(0.980392, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("2_s0yp3")
 theme_override_font_sizes/normal_font_size = 128
 bbcode_enabled = true
 text = "[shake rate=20.0 level=15
  connected=1][center]Sacrifice[/center][/shake]."
+fit_content = true
+scroll_active = false
 visible_characters_behavior = 1
-
-[node name="KillButton" type="TextureButton" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
-unique_name_in_owner = true
-layout_mode = 2

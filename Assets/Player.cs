@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, IResetable
 {
     [Export]
     int Speed = 250;
@@ -14,8 +14,11 @@ public partial class Player : CharacterBody2D
 
     bool canDash = true;
     Npc closestNpc;
+    Vector2 StartPosition;
+    AnimationTree AnimationTree => GetNode<AnimationTree>("%AnimationTree");
     public override void _Ready()
     {
+        StartPosition = GlobalPosition;
         Global.Player = this;
     }
 
@@ -66,11 +69,12 @@ public partial class Player : CharacterBody2D
 
         activeDashSpeed = activeDashSpeed * DashTaperSpeed;
         var movementSpeed = movementDirection * (Speed + activeDashSpeed);
+        
 
+        AnimationTree.Set("parameters/movement/blend_position", movementDirection);
         // MoveAndCollide(movementSpeed);
         Velocity = movementSpeed;
         MoveAndSlide();
-        LookAt(GetGlobalMousePosition());
     }
 
 
@@ -86,7 +90,9 @@ public partial class Player : CharacterBody2D
         {
             if (Global.GameState == GameStateEnum.TalkingPhase)
             {
-                if (closestNpc != null && Global.DialogueUI.MenuOpen == false)
+
+                if (closestNpc != null && Global.DialogueUI.MenuOpen == false ||
+                    closestNpc != null && closestNpc != Global.DialogueUI.ActiveNpc)
                 {
                     if (closestNpc != Global.DialogueUI.ActiveNpc && Global.DialogueUI.ActiveNpc != null)
                     {
@@ -102,4 +108,10 @@ public partial class Player : CharacterBody2D
     {
         closestNpc = Global.AllNpcs.Where(x => x.RangeStatus == RangeStatusEnum.InsideFocus).FirstOrDefault();
     }
+
+    public void Reset()
+    {
+        GlobalPosition = StartPosition;
+    }
+
 }

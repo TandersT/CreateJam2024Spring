@@ -1,23 +1,64 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3in726u7mqpx"]
+[gd_scene load_steps=11 format=3 uid="uid://c3in726u7mqpx"]
 
-[ext_resource type="Texture2D" uid="uid://ciffox4m7t3yd" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/red_character.png" id="1_5c7jr"]
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Npc.cs" id="1_fwa7v"]
-[ext_resource type="Texture2D" uid="uid://d1wj3ltnqkgpi" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/purple_character.png" id="2_iiexu"]
-[ext_resource type="Texture2D" uid="uid://30niwrobq08f" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/yellow_character.png" id="4_dgar1"]
 [ext_resource type="Material" uid="uid://dcrrtt4ys5t5" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
+[ext_resource type="Texture2D" uid="uid://bwbm4lg7timgp" path="res://Assets/Entities/NPC/spritesheet 5.png" id="6_p11bd"]
+[ext_resource type="Texture2D" uid="uid://c2v1xv5dr25ni" path="res://Assets/Entities/NPC/spritesheet 4.png" id="6_wnih7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5sfm"]
+atlas = ExtResource("6_p11bd")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwu3x"]
+atlas = ExtResource("6_p11bd")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vf2l"]
+atlas = ExtResource("6_wnih7")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nw7nx"]
+atlas = ExtResource("6_wnih7")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hmhl6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5sfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwu3x")
+}],
+"loop": true,
+"name": &"orc",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vf2l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nw7nx")
+}],
+"loop": true,
+"name": &"wizard",
+"speed": 2.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gl8ut"]
 radius = 20.0
 
 [node name="NPC" type="CharacterBody2D"]
-scale = Vector2(2, 2)
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_fwa7v")
-NpcIcons = Array[Texture2D]([ExtResource("2_iiexu"), ExtResource("1_5c7jr"), ExtResource("4_dgar1")])
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Icon" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 material = ExtResource("5_tf5by")
-texture = ExtResource("1_5c7jr")
+sprite_frames = SubResource("SpriteFrames_hmhl6")
+animation = &"orc"
+frame_progress = 0.481487
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gl8ut")

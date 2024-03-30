@@ -20,7 +20,8 @@ public partial class Main : Node2D
 		Resetables = new List<IResetable>
 		{
 			Global.DialogueUI,
-			Global.GameUI
+			Global.GameUI,
+			Global.Player,
 		};
 		Resetables.ForEach(x => x.Reset());
 
@@ -53,8 +54,11 @@ public partial class Main : Node2D
 		}
 		switch (gameState)
 		{
-			case GameStateEnum.End:
+			case GameStateEnum.RoundFinished:
 				Resetables.ForEach(x => x.Reset());
+				break;
+			case GameStateEnum.Idle:
+				Global.RoundCount = 0;
 				break;
 		}
 	}
