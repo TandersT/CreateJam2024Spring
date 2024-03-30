@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=14 format=3 uid="uid://tmrajk2wp86o"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
 [ext_resource type="PackedScene" uid="uid://c3in726u7mqpx" path="res://Assets/Entities/NPC/Npc.tscn" id="1_muci2"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://bgx4gkbmlcro" path="res://GameUI.tscn" id="4_resir"]
 [ext_resource type="PackedScene" uid="uid://bffgfny3yr0q" path="res://MenuUI.tscn" id="5_u1uot"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
+[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/ProgrammerRole.cs" id="8_p06d5"]
+[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/SoundDesignerRole.cs" id="9_50b0n"]
+[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/GraphicsArtist.cs" id="10_nvisy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a84o2"]
 texture = ExtResource("3_77tmi")
@@ -517,3 +520,14 @@ layout_mode = 1
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]
 visible = false
 layout_mode = 1
+
+[node name="Roles" type="Node" parent="."]
+
+[node name="Programmer" type="Node" parent="Roles"]
+script = ExtResource("8_p06d5")
+
+[node name="SoundDesigner" type="Node" parent="Roles"]
+script = ExtResource("9_50b0n")
+
+[node name="GraphicsArtist" type="Node" parent="Roles"]
+script = ExtResource("10_nvisy")
