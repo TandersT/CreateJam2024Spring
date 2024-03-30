@@ -35,11 +35,14 @@ public partial class Player : CharacterBody2D, IResetable
         rest.ForEach(x => x.RangeStatus = RangeStatusEnum.InsideUnfocus);
 
         UpdateClosestNpc();
-        if (closestNpc == null)
+        if (Global.GameState == GameStateEnum.KillingPhase ||
+        Global.GameState == GameStateEnum.TalkingPhase)
         {
-            Global.DialogueUI.HideDialogue();
+            if (closestNpc == null)
+            {
+                Global.DialogueUI.HideDialogue();
+            }
         }
-
         if (Global.GameState == GameStateEnum.KillingPhase)
         {
             if (closestNpc != null && Global.DialogueUI.MenuOpen == false)
@@ -69,9 +72,10 @@ public partial class Player : CharacterBody2D, IResetable
 
         activeDashSpeed = activeDashSpeed * DashTaperSpeed;
         var movementSpeed = movementDirection * (Speed + activeDashSpeed);
-        
+
 
         AnimationTree.Set("parameters/movement/blend_position", movementDirection);
+        AnimationTree.Set("parameters/add_sound/add_amount", movementDirection.Abs().Length() != 0 ? 1 : 0);
         // MoveAndCollide(movementSpeed);
         Velocity = movementSpeed;
         MoveAndSlide();

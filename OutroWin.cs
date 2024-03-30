@@ -23,6 +23,7 @@ public partial class OutroWin : PanelContainer
 		{
 			if (index == conversation.Count)
 			{
+				Global.MenuState = MenuStateEnum.Menu;
 				Global.GameState = GameStateEnum.End;
 			}
 			else
@@ -44,6 +45,10 @@ public partial class OutroWin : PanelContainer
 		{
 			advance.Disabled = true;
 			Hide();
+		}
+		if (gameState == GameStateEnum.Idle)
+		{
+			index = 0;
 		}
 	}
 

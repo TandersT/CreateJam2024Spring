@@ -1,17 +1,17 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdlod1l6jgjp7"]
+[gd_scene load_steps=23 format=3 uid="uid://bgx4gkbmlcro"]
 
 [ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
-[ext_resource type="PackedScene" uid="uid://gkvvg4onvdw" path="res://DialogueUI.tscn" id="2_04tq2"]
-[ext_resource type="StyleBox" path="res://Empty.tres" id="2_vs0ux"]
+[ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogueUI.tscn" id="2_04tq2"]
+[ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_vs0ux"]
 [ext_resource type="FontFile" uid="uid://d3j1o50nmnjlc" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="3_d3jd0"]
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="3_wy38x"]
-[ext_resource type="PackedScene" uid="uid://cwxvvd6enctt7" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
+[ext_resource type="PackedScene" uid="uid://cq5m8neexys8g" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
 [ext_resource type="Script" path="res://SkillContainer.cs" id="5_m6j0r"]
-[ext_resource type="Texture2D" uid="uid://67mrd3rlfvqb" path="res://Assets/Cutscenes/Devil2.png" id="6_a0j35"]
 [ext_resource type="Script" path="res://Intro.cs" id="7_2b4le"]
 [ext_resource type="Shader" path="res://Assets/Cutscenes/CutseneShader.gdshader" id="7_txn2p"]
 [ext_resource type="Texture2D" uid="uid://c2e0udqu7rakp" path="res://Assets/Cutscenes/template.png" id="8_0rxxo"]
 [ext_resource type="Script" path="res://OutroWin.cs" id="8_hwcj1"]
+[ext_resource type="Texture2D" uid="uid://y4hxv8p2uk5i" path="res://Assets/Cutscenes/devil.png" id="8_xrff6"]
 [ext_resource type="Script" path="res://OutroLose.cs" id="9_a0m1m"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
@@ -77,7 +77,7 @@ shader = ExtResource("7_txn2p")
 shader_parameter/position = Vector2(0, 0)
 shader_parameter/zoom = 0.6
 shader_parameter/size = 1.0
-shader_parameter/hidden_texture = ExtResource("6_a0j35")
+shader_parameter/hidden_texture = ExtResource("8_xrff6")
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -88,6 +88,32 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_juhkf")
+
+[node name="Overlay" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_right = 170.0
+offset_bottom = 216.0
+mouse_filter = 2
+
+[node name="SkillContainer" type="HBoxContainer" parent="Overlay"]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("5_m6j0r")
+
+[node name="ProgrammerSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2
+Role = 1
+
+[node name="AudioSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2
+Role = 2
+
+[node name="GraphicsSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2
+Role = 3
 
 [node name="TalkingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -209,29 +235,3 @@ layout_mode = 2
 
 [node name="DialogueUI" parent="." instance=ExtResource("2_04tq2")]
 layout_mode = 1
-
-[node name="Overlay" type="PanelContainer" parent="."]
-layout_mode = 1
-offset_right = 158.0
-offset_bottom = 216.0
-mouse_filter = 2
-
-[node name="SkillContainer" type="HBoxContainer" parent="Overlay"]
-layout_mode = 2
-theme_override_constants/separation = 10
-script = ExtResource("5_m6j0r")
-
-[node name="ProgrammerSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
-unique_name_in_owner = true
-layout_mode = 2
-Role = 1
-
-[node name="AudioSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
-unique_name_in_owner = true
-layout_mode = 2
-Role = 2
-
-[node name="GraphicsSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
-unique_name_in_owner = true
-layout_mode = 2
-Role = 3

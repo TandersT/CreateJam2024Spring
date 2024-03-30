@@ -37,6 +37,8 @@ public partial class Intro : PanelContainer
 		};
 	}
 
+
+
 	private void OnGamestateChanged(GameStateEnum gameState)
 	{
 		if (gameState == GameStateEnum.IntroCutscene)
@@ -45,11 +47,15 @@ public partial class Intro : PanelContainer
 			Global.DialogueUI.PrepareCutscene().Finished += () => Global.DialogueUI.ShowCutsceneDialogue(conversation[index++]);
 			advance.Disabled = false;
 			advance.GrabFocus();
-		} else
+		}
+		else
 		{
 			advance.Disabled = true;
 			Hide();
 		}
+		if (gameState == GameStateEnum.Idle)
+		{
+			index = 0;
+		}
 	}
-
 }

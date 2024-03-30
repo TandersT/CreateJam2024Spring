@@ -40,7 +40,8 @@ public static class Global
         "8 hours left",
     };
 
-    public static int Score = 0;
+    public static float Score = 0;
+    public static float DesiredScore = 5;
     public delegate void GameStateChangedDelegate(GameStateEnum gameState);
     public static event GameStateChangedDelegate OnGameStateChangedDelegate;
     private static GameStateEnum gameState = GameStateEnum.NaN;
@@ -69,14 +70,14 @@ public static class Global
     public static List<Vector2> SpawnablePositions = new List<Vector2>();
 
     public static float MaxDistanceToNpc { get; internal set; } = 20000f;
-    public static double RoundDuration { get; internal set; } = 20;
+    public static double RoundDuration { get; internal set; } = 90;
     public static int RoundCount = 0;
     public static DialogueUI DialogueUI { get; internal set; }
     public static SkillContainer SkillContainer { get; internal set; }
     public static NpcContainer NpcContatainer { get; internal set; }
     public static GameUI GameUI { get; internal set; }
     public static int MaxRoundCount { get; internal set; } = 3;
-
+    public static Main Main { get; internal set; }
 
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;

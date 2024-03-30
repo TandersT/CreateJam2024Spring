@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=15 format=3 uid="uid://tmrajk2wp86o"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
 [ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
 [ext_resource type="Texture2D" uid="uid://dlvah2mqcmaq7" path="res://Assets/Artwork/kenney_scribble-dungeons/Tilesheet/tilesheet.png" id="3_77tmi"]
-[ext_resource type="PackedScene" uid="uid://bdlod1l6jgjp7" path="res://GameUI.tscn" id="4_resir"]
+[ext_resource type="PackedScene" uid="uid://bgx4gkbmlcro" path="res://GameUI.tscn" id="4_resir"]
 [ext_resource type="Script" path="res://SpawnablePositions.cs" id="4_x5frg"]
-[ext_resource type="PackedScene" uid="uid://chb43iy470is2" path="res://MenuUI.tscn" id="5_u1uot"]
+[ext_resource type="PackedScene" uid="uid://bffgfny3yr0q" path="res://MenuUI.tscn" id="5_u1uot"]
 [ext_resource type="Script" path="res://NpcContainer.cs" id="5_yunni"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
+[ext_resource type="AudioStream" uid="uid://c7gceoo6thepv" path="res://Richard_Kabushenga_-_The_Devils_Intentions.mp3" id="9_u215v"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dpaf8"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -588,5 +589,9 @@ script = ExtResource("5_yvwrj")
 layout_mode = 1
 
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]
-visible = false
 layout_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9_u215v")
+autoplay = true

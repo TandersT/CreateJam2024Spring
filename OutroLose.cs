@@ -6,11 +6,10 @@ public partial class OutroLose : PanelContainer
 {
 	List<string> conversation = new List<string>
 		{
-			"[center][b]Devil:[/b] Ah, weary coder, it seems the winds of fate have not blown in your favor. The game jam slips from your grasp like sand through an hourglass.[/center]",
-			"[center][b]Programmer:[/b] Alas, devil, my efforts were not enough to seize victory. The bugs proved too elusive, the glitches too stubborn. My soul hangs in the balance, yet victory remains beyond reach.[/center]",
-			"[center][b]Devil:[/b] A pity, indeed. But fret not, for failure is but a temporary setback. A new opportunity may yet arise, ripe for our arrangement.[/center]",
-			"[center][b]Programmer:[/b] Your words offer little solace, devil. The weight of my defeat bears heavy upon me. What price must I pay to turn the tide in my favor?[/center]",
-			"[center][b]Devil:[/b] Patience, dear coder. Our pact remains intact, awaiting the moment when fortune smiles upon us once more. Until then, rest assured that the devil's door is always open to those in need.[/center]"
+			"[center][b]Programmer:[/b] You said you'd help me win the game jam, Devil! Look where that got me – dead last![/center]",
+			"[center][b]Devil:[/b] My sincerest apologies, dear programmer. It seems my expertise in gaming isn't as devilishly effective as I'd hoped.[/center]",
+			"[center][b]Programmer:[/b] No kidding! I could've coded better results in my sleep. What do you have to say for yourself?[/center]",
+			"[center][b]Devil:[/b] Ah, but remember, even in defeat, there are valuable lessons to be learned. Plus, we can always try again.[/center]"
 		};
 
 	public int index;
@@ -22,6 +21,7 @@ public partial class OutroLose : PanelContainer
 		{
 			if (index == conversation.Count)
 			{
+				Global.MenuState = MenuStateEnum.Menu;
 				Global.GameState = GameStateEnum.End;
 			}
 			else
@@ -43,6 +43,10 @@ public partial class OutroLose : PanelContainer
 		{
 			advance.Disabled = true;
 			Hide();
+		}
+		if (gameState == GameStateEnum.Idle)
+		{
+			index = 0;
 		}
 	}
 

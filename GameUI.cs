@@ -44,8 +44,16 @@ public partial class GameUI : Control, IResetable
 		DaysLeft.Visible = true;
 		var tween = CreateTween();
 		DaysLeft.Modulate = DaysLeft.Modulate with { A = 0 };
+		DaysLeftLabel.Text = Global.DaysLeft[Global.RoundCount];
 		tween.TweenProperty(DaysLeft, "modulate:a", 1, 1);
-		tween.TweenInterval(5);
+		tween.TweenCallback(Callable.From(() =>
+		{
+			Global.Main.Resetables.ForEach(x => x.Reset());
+			SpawnNpcs();
+		}
+		));
+
+		tween.TweenInterval(3);
 		tween.TweenProperty(DaysLeft, "modulate:a", 0, 1);
 		tween.Finished += () =>
 		{
@@ -63,8 +71,6 @@ public partial class GameUI : Control, IResetable
 
 	public void Prepare()
 	{
-		SpawnNpcs();
-
 		TimerSlider.MaxValue = Global.RoundDuration;
 		TimerSlider.Value = Global.RoundDuration;
 		var tween = CreateTween();

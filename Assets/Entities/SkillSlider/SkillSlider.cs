@@ -18,22 +18,30 @@ public partial class SkillSlider : VBoxContainer
 
 	public override void _Ready()
 	{
-        switch (Role)
-        {
-            case RoleEnum.Programmer:
+		switch (Role)
+		{
+			case RoleEnum.Programmer:
 				Image.Texture = programmerTexture;
-                break;
-            case RoleEnum.SoundDesigner:
+				break;
+			case RoleEnum.SoundDesigner:
 				Image.Texture = audioTexture;
-                break;
-            case RoleEnum.GraphicsArtist:
+				break;
+			case RoleEnum.GraphicsArtist:
 				Image.Texture = graphicsTexture;
-                break;
-        }
-    }
+				break;
+		}
+		Global.OnGameStateChangedDelegate += (GameStateEnum gameState) =>
+		{
+			if (gameState == GameStateEnum.Idle)
+			{
+				Slider.Value = 0;
+			}
+		};
+	}
 
-    public void UpdateValue(float change)
+	public void UpdateValue(float change)
 	{
 		Slider.Value += change;
+		Global.Score += change;
 	}
 }

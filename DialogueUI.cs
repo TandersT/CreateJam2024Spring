@@ -42,21 +42,20 @@ public partial class DialogueUI : Control, IResetable
 		{
 			ActiveNpc.OnKilled();
 			Global.GameState = GameStateEnum.KillingSelected;
+			Global.RoundCount++;
 			if (Global.RoundCount < Global.MaxRoundCount)
 			{
-				 Global.GameState = GameStateEnum.RoundFinished;
-				Global.RoundCount++;
+				Global.GameState = GameStateEnum.RoundFinished;
 			}
 			else
 			{
-				CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.RoundFinished;
-				if (true)//TODO ADD OPTION TO LOSE
+				if (Global.Score >= Global.DesiredScore)//TODO ADD OPTION TO LOSE
 				{
-					CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.EndCutsceneWin;
+					Global.GameState = GameStateEnum.EndCutsceneWin;
 				}
 				else
 				{
-					CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.EndCutsceneLose;
+					Global.GameState = GameStateEnum.EndCutsceneLose;
 				}
 			}
 		};
@@ -92,11 +91,6 @@ public partial class DialogueUI : Control, IResetable
 		{
 			Reset();
 			KillContainer.Show();
-		}
-		if (gameState == GameStateEnum.IntroCutscene)
-		{
-			Reset();
-			CutsceneContainer.Show();
 		}
 	}
 
@@ -146,6 +140,8 @@ public partial class DialogueUI : Control, IResetable
 
 	public Tween PrepareCutscene()
 	{
+		Reset();
+		CutsceneContainer.Show();
 		MenuOpen = true;
 		var tween = CreateTween();
 		tween.TweenProperty(DialogueContainer, "modulate:a", 1, duration);

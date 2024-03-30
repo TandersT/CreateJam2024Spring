@@ -9,10 +9,10 @@ public partial class Main : Node2D
 	[Export]
 	public bool Quickstart = false;
 
-	List<IResetable> Resetables;
+	public List<IResetable> Resetables;
 	public override void _EnterTree()
 	{
-
+		Global.Main = this;
 		Global.OnGameStateChangedDelegate += OnGamestateChanged;
 	}
 	public override void _Ready()
@@ -28,7 +28,7 @@ public partial class Main : Node2D
 
 		if (Quickstart)
 		{
-			Global.GameState = GameStateEnum.RoundFinished;
+			Global.GameState = GameStateEnum.EndCutsceneLose;
 			Global.MenuState = MenuStateEnum.Ingame;
 		}
 		else
@@ -55,11 +55,13 @@ public partial class Main : Node2D
 		switch (gameState)
 		{
 			case GameStateEnum.RoundFinished:
-				Resetables.ForEach(x => x.Reset());
 				break;
 			case GameStateEnum.Idle:
 				Global.RoundCount = 0;
+				Global.Score = 0;
 				break;
 		}
 	}
+
+
 }

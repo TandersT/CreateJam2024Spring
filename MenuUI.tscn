@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://chb43iy470is2"]
+[gd_scene load_steps=4 format=3 uid="uid://bffgfny3yr0q"]
 
-[ext_resource type="Script" path="res://TweenTest.cs" id="1_edb2w"]
 [ext_resource type="Script" path="res://MenuUI.cs" id="1_qmisp"]
 [ext_resource type="FontFile" uid="uid://d3j1o50nmnjlc" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="2_aoifh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nob3e"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 0.607843)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [node name="MenuUI" type="Control"]
 layout_mode = 3
@@ -13,35 +25,33 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qmisp")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 237.0
-offset_top = 500.0
-offset_right = 277.0
-offset_bottom = 523.0
-text = "asdasdasdasdasdasd
-asdasdasdasdasdasd
-asdasdasdasdasdasd
-asdasdasdasdasdasd
-asdasdasdasdasdasd"
-visible_characters = 0
-visible_characters_behavior = 1
-visible_ratio = 0.0
-script = ExtResource("1_edb2w")
-
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 2
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1910.0
+offset_bottom = 1070.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nob3e")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Menu" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/Menu"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../ControlsButton")
@@ -50,7 +60,7 @@ theme_override_fonts/font = ExtResource("2_aoifh")
 theme_override_font_sizes/font_size = 64
 text = "Start"
 
-[node name="ControlsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/Menu"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
@@ -59,7 +69,7 @@ theme_override_fonts/font = ExtResource("2_aoifh")
 theme_override_font_sizes/font_size = 64
 text = "Controls"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/Menu"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_top = NodePath("../ControlsButton")
@@ -67,3 +77,25 @@ focus_next = NodePath("../StartButton")
 theme_override_fonts/font = ExtResource("2_aoifh")
 theme_override_font_sizes/font_size = 64
 text = "Quit"
+
+[node name="End" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/End"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 128
+text = "Thanks for
+playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TryAgain" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/End"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_aoifh")
+theme_override_font_sizes/font_size = 64
+text = "Try again?"
