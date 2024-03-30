@@ -6,3 +6,4 @@
 shader = ExtResource("1_pbu6o")
 shader_parameter/line_color = Color(0.12549, 1, 0, 1)
 shader_parameter/line_thickness = 2.0
+shader_parameter/active = false

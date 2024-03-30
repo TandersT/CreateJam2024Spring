@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgx4gkbmlcro"]
+[gd_scene load_steps=14 format=3 uid="uid://bgx4gkbmlcro"]
 
 [ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
+[ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogueUI.tscn" id="2_04tq2"]
+[ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_vs0ux"]
+[ext_resource type="Shader" path="res://Vignette.gdshader" id="3_wy38x"]
+[ext_resource type="PackedScene" uid="uid://cq5m8neexys8g" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
+[ext_resource type="Script" path="res://SkillContainer.cs" id="5_m6j0r"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gexu0"]
 
@@ -14,6 +19,49 @@ bg_color = Color(1, 0.8, 0.207843, 1)
 expand_margin_top = 25.0
 expand_margin_bottom = 25.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwt6y"]
+shader = ExtResource("3_wy38x")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_rgb = Color(1, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_sjqkd"]
+resource_name = "Heartbeat"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/vignette_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.5, 1.0, 0.5]
+}
+
+[sub_resource type="Animation" id="Animation_u7ci5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/vignette_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvdeh"]
+_data = {
+"Heartbeat": SubResource("Animation_sjqkd"),
+"RESET": SubResource("Animation_u7ci5")
+}
+
 [node name="GameUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -21,18 +69,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_juhkf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TalkingPhase" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TalkingPhase"]
+layout_mode = 2
 alignment = 2
 
-[node name="TimerSlider" type="HSlider" parent="VBoxContainer"]
+[node name="TimerSlider" type="HSlider" parent="TalkingPhase/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -47,3 +101,50 @@ theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_t2v4h")
 max_value = 90.0
 step = 0.01
 value = 90.0
+
+[node name="KillingPhase" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_vs0ux")
+
+[node name="ColorRect" type="ColorRect" parent="KillingPhase"]
+material = SubResource("ShaderMaterial_pwt6y")
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="KillingPhase/ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_lvdeh")
+}
+autoplay = "Heartbeat"
+speed_scale = 0.5
+
+[node name="DialogueUI" parent="." instance=ExtResource("2_04tq2")]
+layout_mode = 1
+
+[node name="Overlay" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_right = 158.0
+offset_bottom = 216.0
+mouse_filter = 2
+
+[node name="SkillContainer" type="HBoxContainer" parent="Overlay"]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("5_m6j0r")
+
+[node name="ProgrammerSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AudioSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GraphicsSlider" parent="Overlay/SkillContainer" instance=ExtResource("5_j572f")]
+unique_name_in_owner = true
+layout_mode = 2

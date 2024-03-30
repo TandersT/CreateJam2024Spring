@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmwnlec6crwfi"]
+
+[ext_resource type="Script" path="res://DialogueUI.cs" id="1_5yxoq"]
+[ext_resource type="FontFile" uid="uid://d257fd73snfk3" path="res://Assets/Fonts/Bleeding_Cowboys.ttf" id="2_s0yp3"]
+[ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_wvvwv"]
+
+[node name="DialogueUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_5yxoq")
+
+[node name="DialogueContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogueContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="PryContainer" type="HBoxContainer" parent="DialogueContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="DontPry" type="Button" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 74
+text = "Don't
+Pry"
+
+[node name="CenterContainer" type="CenterContainer" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="DialougeLabel" type="Label" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer/CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 38
+text = "asdasd"
+autowrap_mode = 3
+visible_characters_behavior = 1
+
+[node name="Pry" type="Button" parent="DialogueContainer/PanelContainer/MarginContainer/PryContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 74
+text = "Pry"
+
+[node name="KillContainer" type="HBoxContainer" parent="DialogueContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_wvvwv")
+
+[node name="KillLabel" type="RichTextLabel" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/default_color = Color(0.980392, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_s0yp3")
+theme_override_font_sizes/normal_font_size = 128
+bbcode_enabled = true
+text = "[shake rate=20.0 level=15
+ connected=1][center]Sacrifice[/center][/shake]."
+visible_characters_behavior = 1
+
+[node name="KillButton" type="TextureButton" parent="DialogueContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2

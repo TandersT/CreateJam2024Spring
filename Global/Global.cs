@@ -6,7 +6,9 @@ public enum GameStateEnum
 {
     NaN,
     Idle,
-    Active,
+    TalkingPhase,
+    KillingPhase,
+    KillingSelected,
     End,
 }
 
@@ -50,9 +52,14 @@ public static class Global
             OnMenuStateChangedDelegate?.Invoke(value);
         }
     }
+    public static List<Vector2> SpawnablePositions = new List<Vector2>();
 
     public static float MaxDistanceToNpc { get; internal set; } = 20000f;
-    public static double RoundDuration { get; internal set; } = 90;
+    public static double RoundDuration { get; internal set; } = 10;
+    public static DialogueUI DialogueUI { get; internal set; }
+    public static SkillContainer SkillContainer { get; internal set; }
+    public static NpcContainer NpcContatainer { get; internal set; }
+    public static GameUI GameUI { get; internal set; }
 
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;
@@ -61,4 +68,10 @@ public static class Global
     public static List<Npc> AllNpcs = new List<Npc>();
 
     public static Player Player;
+
+    public static PeasentRole PeasentRole = new();
+    public static ProgrammerRole ProgrammerRole = new();
+    public static SoundDesignerRole SoundDesignerRole = new();
+    public static GraphicsArtistRole GraphicsArtistRole = new();
+
 }

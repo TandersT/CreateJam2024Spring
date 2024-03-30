@@ -4,12 +4,13 @@
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Npc.cs" id="1_fwa7v"]
 [ext_resource type="Texture2D" uid="uid://d1wj3ltnqkgpi" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/purple_character.png" id="2_iiexu"]
 [ext_resource type="Texture2D" uid="uid://30niwrobq08f" path="res://Assets/Artwork/kenney_scribble-dungeons/PNG/Default (64px)/Characters/yellow_character.png" id="4_dgar1"]
-[ext_resource type="Material" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
+[ext_resource type="Material" uid="uid://dcrrtt4ys5t5" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gl8ut"]
 radius = 20.0
 
 [node name="NPC" type="CharacterBody2D"]
+scale = Vector2(2, 2)
 script = ExtResource("1_fwa7v")
 NpcIcons = Array[Texture2D]([ExtResource("2_iiexu"), ExtResource("1_5c7jr"), ExtResource("4_dgar1")])
 
@@ -45,3 +46,7 @@ theme_override_constants/outline_size = 3
 text = "@PROFICIENCY@"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+avoidance_enabled = true

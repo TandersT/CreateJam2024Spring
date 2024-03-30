@@ -1,16 +1,34 @@
-[gd_scene load_steps=15 format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=14 format=3 uid="uid://tmrajk2wp86o"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
-[ext_resource type="PackedScene" uid="uid://c3in726u7mqpx" path="res://Assets/Entities/NPC/Npc.tscn" id="1_muci2"]
 [ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
 [ext_resource type="Texture2D" uid="uid://dlvah2mqcmaq7" path="res://Assets/Artwork/kenney_scribble-dungeons/Tilesheet/tilesheet.png" id="3_77tmi"]
-[ext_resource type="PackedScene" path="res://GameUI.tscn" id="4_resir"]
-[ext_resource type="PackedScene" path="res://MenuUI.tscn" id="5_u1uot"]
+[ext_resource type="PackedScene" uid="uid://bgx4gkbmlcro" path="res://GameUI.tscn" id="4_resir"]
+[ext_resource type="Script" path="res://SpawnablePositions.cs" id="4_x5frg"]
+[ext_resource type="PackedScene" uid="uid://bffgfny3yr0q" path="res://MenuUI.tscn" id="5_u1uot"]
+[ext_resource type="Script" path="res://NpcContainer.cs" id="5_yunni"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
-[ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogUI.tscn" id="8_fhjtc"]
-[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/ProgrammerRole.cs" id="8_p06d5"]
-[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/SoundDesignerRole.cs" id="9_50b0n"]
-[ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/GraphicsArtist.cs" id="10_nvisy"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dpaf8"]
+vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(32, -32, 32, 32, -32, 32, -32, -32)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nwmdy"]
+vertices = PackedVector2Array(32, 32, -7, 32, -6, -6, 32, -7)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(32, -7, 32, 32, -6.5, 32, -6, -5.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jlodt"]
+vertices = PackedVector2Array(32, 32, -32, 32, -32, -6, 32, -7)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(32, -7, 32, 32, -32, 32, -32, -6)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a84o2"]
 texture = ExtResource("3_77tmi")
@@ -41,6 +59,7 @@ texture_region_size = Vector2i(64, 64)
 2:0/0/terrains_peering_bit/bottom_right_corner = 0
 2:0/0/terrains_peering_bit/bottom_side = 0
 2:0/0/terrains_peering_bit/left_side = 0
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nwmdy")
 3:0/0 = 0
 3:0/0/terrain_set = 0
 3:0/0/terrain = 0
@@ -52,6 +71,7 @@ texture_region_size = Vector2i(64, 64)
 3:0/0/terrains_peering_bit/bottom_side = 0
 3:0/0/terrains_peering_bit/bottom_left_corner = 0
 3:0/0/terrains_peering_bit/left_side = 0
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_jlodt")
 4:0/0 = 0
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:0/0/physics_layer_0/angular_velocity = 0.0
@@ -86,6 +106,7 @@ texture_region_size = Vector2i(64, 64)
 0:1/0 = 0
 0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_dpaf8")
 1:1/0 = 0
 1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:1/0/physics_layer_0/angular_velocity = 0.0
@@ -456,12 +477,12 @@ physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Autotile"
 terrain_set_0/terrain_0/color = Color(0.501961, 0.345098, 0.25098, 1)
+navigation_layer_0/layers = 1
 sources/2 = SubResource("TileSetAtlasSource_a84o2")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dj4d3"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_e7lxd")
+Quickstart = true
 
 [node name="BG" type="TileMap" parent="."]
 scale = Vector2(2, 2)
@@ -477,36 +498,87 @@ position = Vector2(425, 236)
 scale = Vector2(2, 2)
 Speed = 400
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_dj4d3")
+[node name="SpawnablePositions" type="Node2D" parent="."]
+script = ExtResource("4_x5frg")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(313, 217)
 
-[node name="NPC" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(328, 570)
-scale = Vector2(2, 2)
+[node name="Marker2D2" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(455, 228)
 
-[node name="NPC2" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(1480, 847)
-scale = Vector2(2, 2)
+[node name="Marker2D3" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(306, 422)
 
-[node name="NPC3" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(1601, 199)
-scale = Vector2(2, 2)
+[node name="Marker2D4" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(459, 424)
 
-[node name="NPC4" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(308, 217)
-scale = Vector2(2, 2)
+[node name="Marker2D5" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(195, 318)
 
-[node name="NPC5" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(396, 148)
-scale = Vector2(2, 2)
+[node name="Marker2D6" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(588, 320)
 
-[node name="NPC6" parent="Node2D" instance=ExtResource("1_muci2")]
-position = Vector2(574, 116)
-scale = Vector2(2, 2)
+[node name="Marker2D7" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(315, 598)
+
+[node name="Marker2D8" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(457, 609)
+
+[node name="Marker2D9" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(308, 803)
+
+[node name="Marker2D10" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(461, 805)
+
+[node name="Marker2D11" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(197, 699)
+
+[node name="Marker2D12" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(590, 701)
+
+[node name="Marker2D13" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1468, 594)
+
+[node name="Marker2D14" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1610, 605)
+
+[node name="Marker2D15" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1461, 799)
+
+[node name="Marker2D16" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1614, 801)
+
+[node name="Marker2D17" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1350, 695)
+
+[node name="Marker2D18" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1743, 697)
+
+[node name="Marker2D19" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1451, 213)
+
+[node name="Marker2D20" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1593, 224)
+
+[node name="Marker2D21" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1444, 418)
+
+[node name="Marker2D22" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1597, 420)
+
+[node name="Marker2D23" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1333, 314)
+
+[node name="Marker2D24" type="Marker2D" parent="SpawnablePositions"]
+position = Vector2(1726, 316)
+
+[node name="NpcContainer" type="Node2D" parent="."]
+script = ExtResource("5_yunni")
 
 [node name="UI" type="Control" parent="."]
+process_mode = 3
+z_index = 1
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 0
@@ -518,24 +590,6 @@ script = ExtResource("5_yvwrj")
 visible = false
 layout_mode = 1
 
-[node name="DialogUI" parent="UI" instance=ExtResource("8_fhjtc")]
-visible = false
-layout_mode = 1
-
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]
 visible = false
 layout_mode = 1
-
-[node name="Roles" type="Node" parent="."]
-
-[node name="Programmer" type="Node" parent="Roles"]
-unique_name_in_owner = true
-script = ExtResource("8_p06d5")
-
-[node name="SoundDesigner" type="Node" parent="Roles"]
-unique_name_in_owner = true
-script = ExtResource("9_50b0n")
-
-[node name="GraphicsArtist" type="Node" parent="Roles"]
-unique_name_in_owner = true
-script = ExtResource("10_nvisy")

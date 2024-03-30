@@ -11,6 +11,9 @@ public partial class Player : CharacterBody2D
     float DashTaperSpeed = 0.66f;
 
     float activeDashSpeed = 0;
+
+    bool canDash = true;
+    Npc closestNpc;
     public override void _Ready()
     {
         Global.Player = this;
@@ -27,6 +30,21 @@ public partial class Player : CharacterBody2D
             closest.RangeStatus = RangeStatusEnum.InsideFocus;
         }
         rest.ForEach(x => x.RangeStatus = RangeStatusEnum.InsideUnfocus);
+
+        UpdateClosestNpc();
+        if (closestNpc == null)
+        {
+            Global.DialogueUI.HideDialogue();
+        }
+
+        if (Global.GameState == GameStateEnum.KillingPhase)
+        {
+            if (closestNpc != null && Global.DialogueUI.MenuOpen == false)
+            {
+                closestNpc.OnInteractedWith();
+            }
+        }
+
     }
 
     public override void _PhysicsProcess(double delta)
@@ -47,10 +65,10 @@ public partial class Player : CharacterBody2D
         movementDirection = movementDirection.Normalized();
 
         activeDashSpeed = activeDashSpeed * DashTaperSpeed;
-        var movementSpeed = movementDirection * (Speed + activeDashSpeed) * (float)delta;
+        var movementSpeed = movementDirection * (Speed + activeDashSpeed);
 
         // MoveAndCollide(movementSpeed);
-        Velocity = movementSpeed * 50;
+        Velocity = movementSpeed;
         MoveAndSlide();
         LookAt(GetGlobalMousePosition());
     }
@@ -58,22 +76,30 @@ public partial class Player : CharacterBody2D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event.IsActionReleased("Dash"))
+        if (@event.IsActionReleased("Dash") && canDash)
         {
             activeDashSpeed = DashSpeed;
+            canDash = false;
+            CreateTween().TweenInterval(0.33f).Finished += () => canDash = true;
         }
         if (@event.IsActionReleased("Interact"))
         {
-            var _closestNpc = GetClosestNpc();
-            if (_closestNpc != null)
+            if (Global.GameState == GameStateEnum.TalkingPhase)
             {
-                _closestNpc.OnInteractedWith();
+                if (closestNpc != null && Global.DialogueUI.MenuOpen == false)
+                {
+                    if (closestNpc != Global.DialogueUI.ActiveNpc && Global.DialogueUI.ActiveNpc != null)
+                    {
+                        Global.DialogueUI.ActiveNpc.InteractionStatus = InteractionStatusEnum.Interacted;
+                    }
+                    closestNpc.OnInteractedWith();
+                }
             }
         }
     }
 
-    Npc GetClosestNpc()
+    void UpdateClosestNpc()
     {
-        return Global.AllNpcs.Where(x => x.RangeStatus == RangeStatusEnum.InsideFocus).FirstOrDefault();
+        closestNpc = Global.AllNpcs.Where(x => x.RangeStatus == RangeStatusEnum.InsideFocus).FirstOrDefault();
     }
 }

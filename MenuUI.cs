@@ -10,7 +10,7 @@ public partial class MenuUI : Control
 	{
 		StartButton.Pressed += () =>
 		{
-			Global.GameState = GameStateEnum.Active;
+			Global.GameState = GameStateEnum.TalkingPhase;
 			Global.MenuState = MenuStateEnum.Ingame;
 		};
 		

@@ -1,14 +1,16 @@
 using Godot;
 using Godot.NativeInterop;
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 public enum ProficiencyEnum
 {
-    None,
-    Novice,
-    Intermediate,
-    Expert
+    None = 0,
+    Novice = 1,
+    Intermediate = 2,
+    Expert = 3,
 }
 
 public enum RoleEnum
@@ -26,20 +28,29 @@ public enum RangeStatusEnum
     InsideFocus,
 }
 
+public enum InteractionStatusEnum
+{
+    NoInteraction,
+    Interacted,
+}
+
 public partial class Npc : CharacterBody2D
 {
     [Export]
     Texture2D[] NpcIcons;
     RoleEnum Role;
     ProficiencyEnum Proficiency;
-    string NPCName;
-    bool FirstInteract;
 
+    public InteractionStatusEnum InteractionStatus = InteractionStatusEnum.NoInteraction;
+    // string NPCName;
+    public List<string> IgnoreLines = new();
+    public List<string> Lines = new();
+    public int lineIndex = 0;
 
     Label RoleLabel => GetNode<Label>("%RoleLabel");
     Label ProficiencyLabel => GetNode<Label>("%ProficiencyLabel");
-
     Sprite2D Icon => GetNode<Sprite2D>("%Icon");
+    NavigationAgent2D Navigation => GetNode<NavigationAgent2D>("%NavigationAgent2D");
 
 
 
@@ -61,7 +72,14 @@ public partial class Npc : CharacterBody2D
     {
         Global.AllNpcs.Add(this);
         Role = Helper.GetRandomEnumValue<RoleEnum>();
-        Proficiency = Helper.GetRandomEnumValue<ProficiencyEnum>();
+        if (Role == RoleEnum.Peasent)
+        {
+            Proficiency = ProficiencyEnum.None;
+        }
+        else
+        {
+            Proficiency = Helper.GetRandomEnumValue<ProficiencyEnum>(ProficiencyEnum.None);
+        }
 
         RoleLabel.Text = Role.ToString();
         ProficiencyLabel.Text = Proficiency.ToString();
@@ -71,118 +89,145 @@ public partial class Npc : CharacterBody2D
 
         OutlineMaterial = (ShaderMaterial)Icon.Material.Duplicate();
         Icon.Material = OutlineMaterial;
+
+        SetupLines();
+
+        Navigation.TargetPosition = Vector2.One * 100;
+        // Navigation.VelocityComputed += UpdateVelocity;
     }
-    public void OnInteractedWith()
+
+    private void UpdateVelocity(Vector2 safeVelocity)
     {
-        GD.Print(Position.DistanceSquaredTo(Global.Player.Position));
-        var dialogUI = GetNode<DialogUI>("/root/Main/UI/DialogUI");
-        dialogUI.Visible = true;
-        var dialogText = dialogUI.GetNode<Label>("%DialogLabel");
+        Velocity = safeVelocity;
+        MoveAndSlide();
+    }
 
-        if (Role == RoleEnum.Programmer)
-        {
-            var programmerLists = GetNode<ProgrammerRole>("/root/Main/Roles/Programmer");
-            int randomIndex;
-            switch (Proficiency)
-            {
-                case ProficiencyEnum.Novice:
-                    randomIndex = GD.RandRange(0, programmerLists.Novice.Count-1);
-                    dialogText.Text = programmerLists.Novice[randomIndex];
-                    break;
-                case ProficiencyEnum.Intermediate:
-                    randomIndex = GD.RandRange(0, programmerLists.Intermediate.Count-1);
-                    dialogText.Text = programmerLists.Intermediate[randomIndex];
-                    break;
-                case ProficiencyEnum.Expert:
-                    randomIndex = GD.RandRange(0, programmerLists.Expert.Count-1);
-                    dialogText.Text = programmerLists.Expert[randomIndex];
-                    break;
-            }
-        }
 
-        if (Role == RoleEnum.GraphicsArtist)
+    public void SetupLines()
+    {
+        switch (Role)
         {
-            var ArtistLists = GetNode<GraphicsArtist>("/root/Main/Roles/GraphicsArtist");
-            int randomIndex;
-            switch (Proficiency)
-            {
-                case ProficiencyEnum.Novice:
-                    randomIndex = GD.RandRange(0, ArtistLists.Novice.Count-1);
-                    dialogText.Text = ArtistLists.Novice[randomIndex];
-                    break;
-                case ProficiencyEnum.Intermediate:
-                    randomIndex = GD.RandRange(0, ArtistLists.Intermediate.Count-1);
-                    dialogText.Text = ArtistLists.Intermediate[randomIndex];
-                    break;
-                case ProficiencyEnum.Expert:
-                    randomIndex = GD.RandRange(0, ArtistLists.Expert.Count-1);
-                    dialogText.Text = ArtistLists.Expert[randomIndex];
-                    break;
-            }
-        }
-
-        if (Role == RoleEnum.SoundDesigner)
-        {
-            var SoundLists = GetNode<SoundDesignerRole>("/root/Main/Roles/SoundDesigner");
-            int randomIndex;
-            switch (Proficiency)
-            {
-                case ProficiencyEnum.Novice:
-                    randomIndex = GD.RandRange(0, SoundLists.Novice.Count-1);
-                    dialogText.Text = SoundLists.Novice[randomIndex];
-                    break;
-                case ProficiencyEnum.Intermediate:
-                    randomIndex = GD.RandRange(0, SoundLists.Intermediate.Count-1);
-                    dialogText.Text = SoundLists.Intermediate[randomIndex];
-                    break;
-                case ProficiencyEnum.Expert:
-                    randomIndex = GD.RandRange(0, SoundLists.Expert.Count-1);
-                    dialogText.Text = SoundLists.Expert[randomIndex];
-                    break;
-            }
-        }
-
-        if (Role == RoleEnum.Peasent)
-        {
-            //Change the things to general stuff.
-            var SoundLists = GetNode<SoundDesignerRole>("/root/Main/Roles/SoundDesigner");
-            int randomIndex;
-            randomIndex = GD.RandRange(0, SoundLists.Novice.Count-1);
-            dialogText.Text = SoundLists.Novice[randomIndex];
+            case RoleEnum.Peasent:
+                GetLines(Global.PeasentRole);
+                break;
+            case RoleEnum.Programmer:
+                GetLines(Global.ProgrammerRole);
+                break;
+            case RoleEnum.SoundDesigner:
+                GetLines(Global.SoundDesignerRole);
+                break;
+            case RoleEnum.GraphicsArtist:
+                GetLines(Global.GraphicsArtistRole);
+                break;
         }
     }
 
-    public void DialogDecider()
+    public void GetLines(IProficienct iProfcient)
     {
-        //Decides what type of info is given
-        int randomNumber = GD.RandRange(0, 100);
-        if (FirstInteract == true)
+
+        var availableLines = new List<string>();
+        if (Proficiency == ProficiencyEnum.None)
         {
-            if (randomNumber < 70)
-            {
-                //Normal Greeting
-            }
+            availableLines =  new List<string>(iProfcient.Novice);
         }
         else
         {
-            if (randomNumber < 25)
+            switch (Proficiency)
             {
-                //Give general info
-            }
-            else if (randomNumber >= 25 && randomNumber < 50)
-            {
-                //Give role Info
-            }
-            else if (randomNumber >= 50 && randomNumber < 75)
-            {
-                //Give proficiency Info
-            }
-            else
-            {
-                //Give Info on project
+                case ProficiencyEnum.Novice:
+                    {
+                        availableLines =  new List<string>(iProfcient.Novice);
+                        break;
+                    }
+                case ProficiencyEnum.Intermediate:
+                    {
+                        availableLines =  new List<string>(iProfcient.Intermediate);
+                        break;
+                    }
+                case ProficiencyEnum.Expert:
+                    {
+                        availableLines =  new List<string>(iProfcient.Expert);
+                        break;
+                    }
             }
         }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == 0)
+            {
+                var index = Helper.RandomInt(0, iProfcient.Greetings.Count);
+                var text = iProfcient.Greetings[index];
+                Lines.Add(text);
+                continue;
+            }
+
+
+            {
+                var index = Helper.RandomInt(0, availableLines.Count);
+
+                Lines.Add(availableLines[index]);
+
+                availableLines.RemoveAt(index);
+            }
+        }
+
+        List<string> availableIgnoreLines = new List<string>(iProfcient.HasInteracted);
+        for (int i = 0; i < 3; i++)
+        {
+            var index = Helper.RandomInt(0, availableIgnoreLines.Count);
+            string text = availableIgnoreLines[index];
+            IgnoreLines.Add(text);
+            availableIgnoreLines.RemoveAt(index);
+        }
     }
+
+    public void OnInteractedWith()
+    {
+        Global.DialogueUI.PrepareNpcDialogue(this);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        // var movement_delta = 1000;
+
+        // var next_path_position = Navigation.GetNextPathPosition();
+
+        // var new_velocity = GlobalPosition.DirectionTo(next_path_position) * movement_delta;
+        // Navigation.Velocity = new_velocity;
+
+    }
+    // public void DialogDecider()
+    // {
+    //     //Decides what type of info is given
+    //     int randomNumber = GD.RandRange(0, 100);
+    //     if (FirstInteract == true)
+    //     {
+    //         if (randomNumber < 70)
+    //         {
+    //             //Normal Greeting
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (randomNumber < 25)
+    //         {
+    //             //Give general info
+    //         }
+    //         else if (randomNumber >= 25 && randomNumber < 50)
+    //         {
+    //             //Give role Info
+    //         }
+    //         else if (randomNumber >= 50 && randomNumber < 75)
+    //         {
+    //             //Give proficiency Info
+    //         }
+    //         else
+    //         {
+    //             //Give Info on project
+    //         }
+    //     }
+    // }
 
     public void RangeStatusUpdated()
     {
@@ -201,5 +246,10 @@ public partial class Npc : CharacterBody2D
                 break;
 
         }
+    }
+
+    internal void OnKilled()
+    {
+        Global.SkillContainer.UpdateValue(Role, (int)Proficiency);
     }
 }

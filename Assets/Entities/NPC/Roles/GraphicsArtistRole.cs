@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class SoundDesignerRole : Node, IProficienct
+public partial class GraphicsArtistRole : Node, IProficienct
 {
 	public List<string> Greetings { get; set; } = new List<string>
 	{
