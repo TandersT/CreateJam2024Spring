@@ -8,6 +8,8 @@ public partial class MenuUI : Control
 	Button QuitButton => GetNode<Button>("%QuitButton");
 	public override void _Ready()
 	{
+		StartButton.GrabFocus();
+
 		StartButton.Pressed += () =>
 		{
 			Global.GameState = GameStateEnum.IntroCutscene;

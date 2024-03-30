@@ -66,7 +66,7 @@ public partial class DialogueUI : Control, IResetable
 			Pry.ButtonPressed = true;
 			KillButton.ButtonPressed = true;
 		}
-		if (@event.IsActionPressed("A Conntroller"))
+		if (@event.IsActionPressed("A Controller"))
 		{
 			DontPry.ButtonPressed = true;
 		}
@@ -180,6 +180,7 @@ public partial class DialogueUI : Control, IResetable
 
 			Pry.Disabled = false;
 			DontPry.Disabled = false;
+			Pry.GrabFocus();
 		};
 		DialougeLabel.Text = text;
 	}
@@ -200,6 +201,7 @@ public partial class DialogueUI : Control, IResetable
 			dialogieInProcess = false;
 		};
 		CutsceneLabel.Text = text;
+		CutsceneLabel.GrabFocus();
 	}
 
 
@@ -215,6 +217,7 @@ public partial class DialogueUI : Control, IResetable
 		tween.Finished += () =>
 		{
 			dialogieInProcess = false;
+			KillButton.GrabFocus();
 		};
 	}
 
