@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=15 format=3 uid="uid://tmrajk2wp86o"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
 [ext_resource type="PackedScene" uid="uid://c3in726u7mqpx" path="res://Assets/Entities/NPC/Npc.tscn" id="1_muci2"]
 [ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
 [ext_resource type="Texture2D" uid="uid://dlvah2mqcmaq7" path="res://Assets/Artwork/kenney_scribble-dungeons/Tilesheet/tilesheet.png" id="3_77tmi"]
-[ext_resource type="PackedScene" uid="uid://bgx4gkbmlcro" path="res://GameUI.tscn" id="4_resir"]
-[ext_resource type="PackedScene" uid="uid://bffgfny3yr0q" path="res://MenuUI.tscn" id="5_u1uot"]
+[ext_resource type="PackedScene" path="res://GameUI.tscn" id="4_resir"]
+[ext_resource type="PackedScene" path="res://MenuUI.tscn" id="5_u1uot"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
+[ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogUI.tscn" id="8_fhjtc"]
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/ProgrammerRole.cs" id="8_p06d5"]
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/SoundDesignerRole.cs" id="9_50b0n"]
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Roles/GraphicsArtist.cs" id="10_nvisy"]
@@ -517,6 +518,10 @@ script = ExtResource("5_yvwrj")
 visible = false
 layout_mode = 1
 
+[node name="DialogUI" parent="UI" instance=ExtResource("8_fhjtc")]
+visible = false
+layout_mode = 1
+
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]
 visible = false
 layout_mode = 1
@@ -524,10 +529,13 @@ layout_mode = 1
 [node name="Roles" type="Node" parent="."]
 
 [node name="Programmer" type="Node" parent="Roles"]
+unique_name_in_owner = true
 script = ExtResource("8_p06d5")
 
 [node name="SoundDesigner" type="Node" parent="Roles"]
+unique_name_in_owner = true
 script = ExtResource("9_50b0n")
 
 [node name="GraphicsArtist" type="Node" parent="Roles"]
+unique_name_in_owner = true
 script = ExtResource("10_nvisy")
