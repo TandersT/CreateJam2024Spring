@@ -4,9 +4,13 @@ using System.Collections.Generic;
 
 public partial class GameUI : Control, IResetable
 {
+
 	PanelContainer TalkingPhase => GetNode<PanelContainer>("%TalkingPhase");
 	PanelContainer KillingPhase => GetNode<PanelContainer>("%KillingPhase");
 	HSlider TimerSlider => GetNode<HSlider>("%TimerSlider");
+
+	PanelContainer DaysLeft => GetNode<PanelContainer>("%DaysLeft");
+	Label DaysLeftLabel => GetNode<Label>("%DaysLeftLabel");
 
 	public PackedScene PackedNpc = GD.Load<PackedScene>("uid://c3in726u7mqpx");
 	public override void _EnterTree()
@@ -28,6 +32,27 @@ public partial class GameUI : Control, IResetable
 		{
 			KillingPhase.Show();
 		}
+		if (gameState == GameStateEnum.RoundFinished)
+		{
+			ShowTimeLeft();
+			TalkingPhase.Show();
+		}
+	}
+
+	void ShowTimeLeft()
+	{
+		DaysLeft.Visible = true;
+		var tween = CreateTween();
+		DaysLeft.Modulate = DaysLeft.Modulate with { A = 0 };
+		tween.TweenProperty(DaysLeft, "modulate:a", 1, 1);
+		tween.TweenInterval(5);
+		tween.TweenProperty(DaysLeft, "modulate:a", 0, 1);
+		tween.Finished += () =>
+		{
+			DaysLeft.Visible = false;
+			Global.GameState = GameStateEnum.RoundStarted; //TODO Animatin
+			Global.GameState = GameStateEnum.TalkingPhase;
+		};
 	}
 
 	public void Reset()

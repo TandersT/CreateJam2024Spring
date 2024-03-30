@@ -14,6 +14,7 @@ public enum GameStateEnum
     EndCutsceneLose,
     End,
     RoundFinished,
+    RoundStarted,
 
 }
 
@@ -29,8 +30,16 @@ public enum MenuStateEnum
 
 }
 
+
 public static class Global
 {
+    public static List<string> DaysLeft = new()
+    {
+        "40 hours left",
+        "24 hours left",
+        "8 hours left",
+    };
+
     public static int Score = 0;
     public delegate void GameStateChangedDelegate(GameStateEnum gameState);
     public static event GameStateChangedDelegate OnGameStateChangedDelegate;
@@ -61,7 +70,7 @@ public static class Global
 
     public static float MaxDistanceToNpc { get; internal set; } = 20000f;
     public static double RoundDuration { get; internal set; } = 20;
-    public static int RoundCount = 3;
+    public static int RoundCount = 0;
     public static DialogueUI DialogueUI { get; internal set; }
     public static SkillContainer SkillContainer { get; internal set; }
     public static NpcContainer NpcContatainer { get; internal set; }

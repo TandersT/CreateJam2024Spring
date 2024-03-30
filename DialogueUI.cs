@@ -44,14 +44,20 @@ public partial class DialogueUI : Control, IResetable
 			Global.GameState = GameStateEnum.KillingSelected;
 			if (Global.RoundCount < Global.MaxRoundCount)
 			{
-				CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.RoundFinished;
-				CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.TalkingPhase;
+				 Global.GameState = GameStateEnum.RoundFinished;
 				Global.RoundCount++;
 			}
 			else
 			{
 				CreateTween().TweenInterval(1).Finished += () => Global.GameState = GameStateEnum.RoundFinished;
-				CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.End;
+				if (true)//TODO ADD OPTION TO LOSE
+				{
+					CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.EndCutsceneWin;
+				}
+				else
+				{
+					CreateTween().TweenInterval(2).Finished += () => Global.GameState = GameStateEnum.EndCutsceneLose;
+				}
 			}
 		};
 
@@ -59,9 +65,9 @@ public partial class DialogueUI : Control, IResetable
 
 	}
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event.IsActionPressed("B Controller"))
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("B Controller"))
 		{
 			Pry.ButtonPressed = true;
 			KillButton.ButtonPressed = true;
@@ -70,9 +76,9 @@ public partial class DialogueUI : Control, IResetable
 		{
 			DontPry.ButtonPressed = true;
 		}
-    }
+	}
 
-    private void OnGamestateChanged(GameStateEnum gameState)
+	private void OnGamestateChanged(GameStateEnum gameState)
 	{
 		PryContainer.Hide();
 		KillContainer.Hide();
@@ -195,7 +201,7 @@ public partial class DialogueUI : Control, IResetable
 		dialogieInProcess = true;
 
 		var tween = CreateTween();
-		tween.TweenProperty(CutsceneLabel, "visible_ratio", 1, text.Length/50f);
+		tween.TweenProperty(CutsceneLabel, "visible_ratio", 1, text.Length / 50f);
 		tween.Finished += () =>
 		{
 			dialogieInProcess = false;

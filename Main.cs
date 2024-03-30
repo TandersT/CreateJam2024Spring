@@ -28,7 +28,7 @@ public partial class Main : Node2D
 
 		if (Quickstart)
 		{
-			Global.GameState = GameStateEnum.TalkingPhase;
+			Global.GameState = GameStateEnum.RoundFinished;
 			Global.MenuState = MenuStateEnum.Ingame;
 		}
 		else

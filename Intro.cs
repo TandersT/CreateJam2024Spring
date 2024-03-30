@@ -28,7 +28,7 @@ public partial class Intro : PanelContainer
 		{
 			if (index == conversation.Count)
 			{
-				Global.GameState = GameStateEnum.TalkingPhase;
+				Global.GameState = GameStateEnum.RoundFinished;
 			}
 			else
 			{

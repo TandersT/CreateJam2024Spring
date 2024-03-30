@@ -68,6 +68,7 @@ public partial class Npc : CharacterBody2D
         "2",
         "3",
         "4",
+        "5",
     };
 
 

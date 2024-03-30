@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
 [ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
 [ext_resource type="Texture2D" uid="uid://dlvah2mqcmaq7" path="res://Assets/Artwork/kenney_scribble-dungeons/Tilesheet/tilesheet.png" id="3_77tmi"]
-[ext_resource type="PackedScene" uid="uid://bdlod1l6jgjp7" path="res://GameUI.tscn" id="4_resir"]
+[ext_resource type="PackedScene" uid="uid://bgx4gkbmlcro" path="res://GameUI.tscn" id="4_resir"]
 [ext_resource type="Script" path="res://SpawnablePositions.cs" id="4_x5frg"]
-[ext_resource type="PackedScene" uid="uid://chb43iy470is2" path="res://MenuUI.tscn" id="5_u1uot"]
+[ext_resource type="PackedScene" uid="uid://bffgfny3yr0q" path="res://MenuUI.tscn" id="5_u1uot"]
 [ext_resource type="Script" path="res://NpcContainer.cs" id="5_yunni"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
 
@@ -482,6 +482,7 @@ sources/2 = SubResource("TileSetAtlasSource_a84o2")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_e7lxd")
+Quickstart = true
 
 [node name="BG" type="TileMap" parent="."]
 scale = Vector2(2, 2)
