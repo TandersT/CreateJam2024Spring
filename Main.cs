@@ -9,6 +9,9 @@ public partial class Main : Node2D
 	[Export]
 	public bool Quickstart = false;
 
+	AudioStreamPlayer Menu => GetNode<AudioStreamPlayer>("%Menu");
+	AudioStreamPlayer Game => GetNode<AudioStreamPlayer>("%Game");
+
 	public List<IResetable> Resetables;
 	public override void _EnterTree()
 	{
@@ -28,7 +31,7 @@ public partial class Main : Node2D
 
 		if (Quickstart)
 		{
-			Global.GameState = GameStateEnum.EndCutsceneLose;
+			Global.GameState = GameStateEnum.RoundFinished;
 			Global.MenuState = MenuStateEnum.Ingame;
 		}
 		else
@@ -45,11 +48,22 @@ public partial class Main : Node2D
 			case GameStateEnum.NaN:
 			case GameStateEnum.Idle:
 			case GameStateEnum.End:
+			case GameStateEnum.Paused:
 				GetTree().Paused = true;
+				Game.Stop();
+				if (!Menu.Playing)
+				{
+					Menu.Play();
+				}
 				break;
 			case GameStateEnum.TalkingPhase:
 			case GameStateEnum.KillingPhase:
 				GetTree().Paused = false;
+				Menu.Stop();
+				if (!Game.Playing)
+				{
+					Game.Play();
+				}
 				break;
 		}
 		switch (gameState)
@@ -59,6 +73,10 @@ public partial class Main : Node2D
 			case GameStateEnum.Idle:
 				Global.RoundCount = 0;
 				Global.Score = 0;
+				Global.RoundDuration = 50;
+				Global.ProgrammerScore = 0;
+				Global.SoundDesignerScore = 0;
+				Global.GraphicsArtistScore = 0;
 				break;
 		}
 	}

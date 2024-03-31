@@ -44,8 +44,15 @@ public enum CommuncationTypeEnum
 
 public partial class Npc : CharacterBody2D
 {
-    RoleEnum Role;
-    ProficiencyEnum Proficiency;
+    public RoleEnum Role;
+    public ProficiencyEnum Proficiency;
+
+    [Export]
+    AudioStream[] ProgrammerAudio;
+    [Export]
+    AudioStream[] SoundAudio;
+    [Export]
+    AudioStream[] GraphicsAudio;
 
     public InteractionStatusEnum InteractionStatus = InteractionStatusEnum.NoInteraction;
 
@@ -61,6 +68,10 @@ public partial class Npc : CharacterBody2D
     Label ProficiencyLabel => GetNode<Label>("%ProficiencyLabel");
     AnimatedSprite2D Icon => GetNode<AnimatedSprite2D>("%Icon");
     NavigationAgent2D Navigation => GetNode<NavigationAgent2D>("%NavigationAgent2D");
+    AudioStreamPlayer2D AudioStreamPlayer2D => GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+    AudioStreamPlayer Suck => GetNode<AudioStreamPlayer>("%Suck");
+    AudioStreamPlayer Scream => GetNode<AudioStreamPlayer>("%Scream");
+    AnimatedSprite2D SoulSprite => GetNode<AnimatedSprite2D>("%SoulSprite");
 
     List<string> animations = new()
     {
@@ -89,22 +100,19 @@ public partial class Npc : CharacterBody2D
     public override void _EnterTree()
     {
         Global.AllNpcs.Add(this);
-        Role = Helper.GetRandomEnumValue<RoleEnum>();
         if (Role == RoleEnum.Peasent)
         {
             Proficiency = ProficiencyEnum.None;
             FilledCommuncationTypes.Add(CommuncationTypeEnum.Role);
             FilledCommuncationTypes.Add(CommuncationTypeEnum.Proficiency);
         }
-        else
-        {
-            Proficiency = Helper.GetRandomEnumValue<ProficiencyEnum>(ProficiencyEnum.None);
-        }
 
         RoleLabel.Text = Role.ToString();
         ProficiencyLabel.Text = Proficiency.ToString();
 
         Icon.Animation = animations[Helper.RandomInt(0, animations.Count)];
+        Icon.SpeedScale = Helper.RandomFloat(0.9f, 1.1f);
+        Icon.Frame = Helper.RandomInt(0, 2);
 
         OutlineMaterial = (ShaderMaterial)Icon.Material.Duplicate();
         Icon.Material = OutlineMaterial;
@@ -115,6 +123,31 @@ public partial class Npc : CharacterBody2D
 
         Navigation.TargetPosition = Vector2.One * 100;
         // Navigation.VelocityComputed += UpdateVelocity;
+
+
+
+
+    }
+
+    public override void _Ready()
+    {
+        if (Helper.RandomPolarity() == 1)
+        {
+            switch (Role)
+            {
+                case RoleEnum.Programmer:
+                    AudioStreamPlayer2D.Stream = ProgrammerAudio[Helper.RandomInt(0, ProgrammerAudio.Length)];
+                    break;
+                case RoleEnum.SoundDesigner:
+                    AudioStreamPlayer2D.Stream = SoundAudio[Helper.RandomInt(0, SoundAudio.Length)];
+                    break;
+                case RoleEnum.GraphicsArtist:
+                    AudioStreamPlayer2D.Stream = GraphicsAudio[Helper.RandomInt(0, GraphicsAudio.Length)];
+                    break;
+
+            }
+            AudioStreamPlayer2D.Play();
+        }
     }
 
     private void UpdateVelocity(Vector2 safeVelocity)
@@ -244,5 +277,8 @@ public partial class Npc : CharacterBody2D
     internal void OnKilled()
     {
         Global.SkillContainer.UpdateValue(Role, (int)Proficiency);
+        Suck.Play();
+        Scream.Play();
+        SoulSprite.Play();
     }
 }

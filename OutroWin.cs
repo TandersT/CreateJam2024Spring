@@ -40,6 +40,7 @@ public partial class OutroWin : PanelContainer
 			Show();
 			Global.DialogueUI.PrepareCutscene().Finished += () => Global.DialogueUI.ShowCutsceneDialogue(conversation[index++]);
 			advance.Disabled = false;
+			advance.CallDeferred("grab_focus");
 		}
 		else
 		{

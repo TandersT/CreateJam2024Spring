@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c001y0v82jdo0"
+path="res://.godot/imported/MAGEvil_Devil Soul Suck_MR_SACRFCE.ogg-b299a707a0e60abcf3ec46d3340196ee.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/Player/sounds/MAGEvil_Devil Soul Suck_MR_SACRFCE.ogg"
+dest_files=["res://.godot/imported/MAGEvil_Devil Soul Suck_MR_SACRFCE.ogg-b299a707a0e60abcf3ec46d3340196ee.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

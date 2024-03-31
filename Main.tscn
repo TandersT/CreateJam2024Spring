@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://tmrajk2wp86o"]
+[gd_scene load_steps=16 format=3 uid="uid://tmrajk2wp86o"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_e7lxd"]
 [ext_resource type="PackedScene" uid="uid://caqpwuoooxnw4" path="res://Assets/Entities/Player/Player.tscn" id="2_cp46j"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://NpcContainer.cs" id="5_yunni"]
 [ext_resource type="Script" path="res://UIController.cs" id="5_yvwrj"]
 [ext_resource type="AudioStream" uid="uid://c7gceoo6thepv" path="res://Richard_Kabushenga_-_The_Devils_Intentions.mp3" id="9_u215v"]
+[ext_resource type="AudioStream" uid="uid://l2uoxml0430f" path="res://Assets/Entities/AMBRoom_Background_MR_SACRFCE, looping.ogg" id="10_vhkoc"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dpaf8"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -483,6 +484,7 @@ sources/2 = SubResource("TileSetAtlasSource_a84o2")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_e7lxd")
+Quickstart = true
 
 [node name="BG" type="TileMap" parent="."]
 scale = Vector2(2, 2)
@@ -591,7 +593,13 @@ layout_mode = 1
 [node name="MenuUI" parent="UI" instance=ExtResource("5_u1uot")]
 layout_mode = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Menu" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("9_u215v")
-autoplay = true
+volume_db = -10.0
+
+[node name="Game" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("10_vhkoc")

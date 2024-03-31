@@ -43,5 +43,17 @@ public partial class SkillSlider : VBoxContainer
 	{
 		Slider.Value += change;
 		Global.Score += change;
+		switch (Role)
+		{
+			case RoleEnum.Programmer:
+				Global.ProgrammerScore = (int)Slider.Value;
+				break;
+			case RoleEnum.SoundDesigner:
+				Global.SoundDesignerScore = (int)Slider.Value;
+				break;
+			case RoleEnum.GraphicsArtist:
+				Global.GraphicsArtistScore = (int)Slider.Value;
+				break;
+		}
 	}
 }

@@ -34,6 +34,10 @@ public partial class UIController : Control
             case MenuStateEnum.Ingame:
 				GameUI.Show();
                 break;
+            case MenuStateEnum.Pause:
+				MenuUI.Show();
+				GameUI.Show();
+                break;
         }
 
     }

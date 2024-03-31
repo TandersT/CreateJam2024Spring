@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bme7nnicvw51k"
+path="res://.godot/imported/AMBMisc-ARTIST_Pencil Drop_MR_SACRFCE, oneshot.ogg-23f5fb11cdc68bdb965545a727ebc66d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/NPC/audio/AMBMisc-ARTIST_Pencil Drop_MR_SACRFCE, oneshot.ogg"
+dest_files=["res://.godot/imported/AMBMisc-ARTIST_Pencil Drop_MR_SACRFCE, oneshot.ogg-23f5fb11cdc68bdb965545a727ebc66d.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

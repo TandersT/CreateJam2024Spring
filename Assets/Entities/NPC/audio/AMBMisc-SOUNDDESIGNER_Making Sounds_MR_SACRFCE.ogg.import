@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cy26od2gwyo0q"
+path="res://.godot/imported/AMBMisc-SOUNDDESIGNER_Making Sounds_MR_SACRFCE.ogg-c2bce5afb7a95776f2082da9f486fefb.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/NPC/audio/AMBMisc-SOUNDDESIGNER_Making Sounds_MR_SACRFCE.ogg"
+dest_files=["res://.godot/imported/AMBMisc-SOUNDDESIGNER_Making Sounds_MR_SACRFCE.ogg-c2bce5afb7a95776f2082da9f486fefb.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

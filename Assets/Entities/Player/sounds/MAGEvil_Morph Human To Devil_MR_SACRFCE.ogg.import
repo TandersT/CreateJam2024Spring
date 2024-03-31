@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bypei0c0ueu0n"
+path="res://.godot/imported/MAGEvil_Morph Human To Devil_MR_SACRFCE.ogg-f640c10b507a81158d849693f169f3f9.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/Player/sounds/MAGEvil_Morph Human To Devil_MR_SACRFCE.ogg"
+dest_files=["res://.godot/imported/MAGEvil_Morph Human To Devil_MR_SACRFCE.ogg-f640c10b507a81158d849693f169f3f9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

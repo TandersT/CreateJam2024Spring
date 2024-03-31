@@ -15,7 +15,7 @@ public enum GameStateEnum
     End,
     RoundFinished,
     RoundStarted,
-
+    Paused,
 }
 
 public enum MenuStateEnum
@@ -27,7 +27,7 @@ public enum MenuStateEnum
     End,
     Settings,
     Ingame,
-
+    Pause,
 }
 
 
@@ -70,7 +70,7 @@ public static class Global
     public static List<Vector2> SpawnablePositions = new List<Vector2>();
 
     public static float MaxDistanceToNpc { get; internal set; } = 20000f;
-    public static double RoundDuration { get; internal set; } = 90;
+    public static double RoundDuration { get; internal set; } = 50;
     public static int RoundCount = 0;
     public static DialogueUI DialogueUI { get; internal set; }
     public static SkillContainer SkillContainer { get; internal set; }
@@ -78,6 +78,10 @@ public static class Global
     public static GameUI GameUI { get; internal set; }
     public static int MaxRoundCount { get; internal set; } = 3;
     public static Main Main { get; internal set; }
+    public static int GraphicsArtistScore { get; internal set; }
+    public static int SoundDesignerScore { get; internal set; }
+    public static int ProgrammerScore { get; internal set; }
+
 
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;

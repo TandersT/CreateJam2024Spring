@@ -46,7 +46,7 @@ public partial class Intro : PanelContainer
 			Show();
 			Global.DialogueUI.PrepareCutscene().Finished += () => Global.DialogueUI.ShowCutsceneDialogue(conversation[index++]);
 			advance.Disabled = false;
-			advance.GrabFocus();
+			advance.CallDeferred("grab_focus");
 		}
 		else
 		{

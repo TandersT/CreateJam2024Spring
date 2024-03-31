@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bgx4gkbmlcro"]
+[gd_scene load_steps=24 format=3 uid="uid://bgx4gkbmlcro"]
 
 [ext_resource type="Script" path="res://GameUI.cs" id="1_juhkf"]
 [ext_resource type="PackedScene" uid="uid://dmwnlec6crwfi" path="res://DialogueUI.tscn" id="2_04tq2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://Vignette.gdshader" id="3_wy38x"]
 [ext_resource type="PackedScene" uid="uid://cq5m8neexys8g" path="res://Assets/SkillSlider.tscn" id="5_j572f"]
 [ext_resource type="Script" path="res://SkillContainer.cs" id="5_m6j0r"]
+[ext_resource type="AudioStream" uid="uid://bpeb8i2pi8mvq" path="res://Assets/Entities/Player/dawn-of-the-first-day.mp3" id="6_p67px"]
 [ext_resource type="Script" path="res://Intro.cs" id="7_2b4le"]
 [ext_resource type="Shader" path="res://Assets/Cutscenes/CutseneShader.gdshader" id="7_txn2p"]
 [ext_resource type="Texture2D" uid="uid://c2e0udqu7rakp" path="res://Assets/Cutscenes/template.png" id="8_0rxxo"]
@@ -159,6 +160,10 @@ theme_override_font_sizes/font_size = 128
 text = "42 hours left"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DaysLeftAudio" type="AudioStreamPlayer" parent="TalkingPhase/DaysLeft"]
+unique_name_in_owner = true
+stream = ExtResource("6_p67px")
 
 [node name="KillingPhase" type="PanelContainer" parent="."]
 unique_name_in_owner = true

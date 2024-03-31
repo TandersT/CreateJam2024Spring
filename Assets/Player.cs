@@ -1,8 +1,25 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
 public partial class Player : CharacterBody2D, IResetable
 {
+    int introSpeedIndex = 0;
+    List<string> IntroSpeech = new()
+    {
+        "Now that I have assumed my human form I can walk undetected amongst the humans.",
+        "I need to act fast through, I can only maintain this form a limited time.",
+        "I wonder which of these duds are actually worth sacrifing.. I should try talk with them.",
+        "I guess I can figure out their role and strength that way."
+    };
+
+    List<string> SecondSpeech = new()
+    {
+        "I should make sure I get a varied cast of skills",
+        "A game with only programming tends to lack in other departments..",
+        "I've seen my fair share of programmers in hell who refused to add proper graphics",
+    };
+
     [Export]
     int Speed = 250;
     [Export]
@@ -16,6 +33,44 @@ public partial class Player : CharacterBody2D, IResetable
     Npc closestNpc;
     Vector2 StartPosition;
     AnimationTree AnimationTree => GetNode<AnimationTree>("%AnimationTree");
+    AnimationTree AnimationTreeDemon => GetNode<AnimationTree>("%AnimationTreeDemon");
+    AnimationPlayer Text => GetNode<AnimationPlayer>("%Text");
+    Label SpeechLabel => GetNode<Label>("%SpeechLabel");
+
+
+    public override void _EnterTree()
+    {
+        Global.OnGameStateChangedDelegate += (GameStateEnum gameState) =>
+        {
+            switch (gameState)
+            {
+                case GameStateEnum.TalkingPhase:
+                    AnimationTree.Active = true;
+                    AnimationTreeDemon.Active = false;
+                    break;
+                case GameStateEnum.KillingPhase:
+                    AnimationTreeDemon.Active = true;
+                    AnimationTree.Active = false;
+                    break;
+            }
+            if (gameState == GameStateEnum.TalkingPhase && Global.RoundCount == 0)
+            {
+                Text.Play("Text");
+                AdvanceText(IntroSpeech);
+            }
+            else if (gameState == GameStateEnum.TalkingPhase && Global.RoundCount == 1)
+            {
+                Text.Play("Text");
+                AdvanceText(SecondSpeech);
+            }
+            else
+            {
+                Text.Play("RESET");
+                introSpeedIndex = 0;
+            }
+        };
+    }
+
     public override void _Ready()
     {
         StartPosition = GlobalPosition;
@@ -75,13 +130,31 @@ public partial class Player : CharacterBody2D, IResetable
 
 
         AnimationTree.Set("parameters/movement/blend_position", movementDirection);
+        AnimationTreeDemon.Set("parameters/movement/blend_position", movementDirection);
         AnimationTree.Set("parameters/add_sound/add_amount", movementDirection.Abs().Length() != 0 ? 1 : 0);
         // MoveAndCollide(movementSpeed);
         Velocity = movementSpeed;
         MoveAndSlide();
+
+
     }
 
-
+    void AdvanceText(List<string> text)
+    {
+        if (introSpeedIndex < text.Count)
+        {
+            SpeechLabel.VisibleRatio = 0;
+            SpeechLabel.Text = text[introSpeedIndex++];
+            var tween = CreateTween();
+            tween.TweenProperty(SpeechLabel, "visible_ratio", 1, SpeechLabel.Text.Length / 30f);
+            tween.TweenInterval(2);
+            tween.Finished += () => AdvanceText(text);
+        }
+        else
+        {
+            Text.Play("RESET");
+        }
+    }
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionPressed("Dash") && canDash)
@@ -116,6 +189,8 @@ public partial class Player : CharacterBody2D, IResetable
     public void Reset()
     {
         GlobalPosition = StartPosition;
+        introSpeedIndex = 0;
+        Text.Play("RESET");
     }
 
 }

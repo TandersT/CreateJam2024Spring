@@ -1,12 +1,23 @@
-[gd_scene load_steps=20 format=3 uid="uid://c3in726u7mqpx"]
+[gd_scene load_steps=41 format=3 uid="uid://c3in726u7mqpx"]
 
 [ext_resource type="Script" path="res://Assets/Entities/NPC/Npc.cs" id="1_fwa7v"]
+[ext_resource type="AudioStream" uid="uid://bbibmr4pptn6q" path="res://Assets/Entities/NPC/audio/AMBMisc-PROGRAMMER_Coding_MR_SACRFCE, looping.ogg" id="2_34an0"]
+[ext_resource type="AudioStream" uid="uid://cuyc1f4xggso" path="res://Assets/Entities/NPC/audio/AMBMisc-ARTIST_Drawing_MR_SACRFCE, looping.ogg" id="2_371i8"]
+[ext_resource type="AudioStream" uid="uid://bme7nnicvw51k" path="res://Assets/Entities/NPC/audio/AMBMisc-ARTIST_Pencil Drop_MR_SACRFCE, oneshot.ogg" id="3_auh1p"]
+[ext_resource type="AudioStream" uid="uid://dovx7msxn3pcj" path="res://Assets/Entities/NPC/audio/AMBMisc-PROGRAMMER_Getting Errors_MR_SACRFCE, oneshot.ogg" id="3_kjfh1"]
 [ext_resource type="Texture2D" uid="uid://bmyto30vreqsq" path="res://Assets/Entities/NPC/spritesheet 7.png" id="3_q8paq"]
 [ext_resource type="Texture2D" uid="uid://dpgjmkjbeg4e" path="res://Assets/Entities/NPC/spritesheet 6.png" id="4_dfj8x"]
-[ext_resource type="Material" uid="uid://dbi0v3w3nw4qf" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
+[ext_resource type="AudioStream" uid="uid://cy26od2gwyo0q" path="res://Assets/Entities/NPC/audio/AMBMisc-SOUNDDESIGNER_Making Sounds_MR_SACRFCE.ogg" id="4_it710"]
+[ext_resource type="Material" uid="uid://dcrrtt4ys5t5" path="res://Assets/Entities/NPC/NpcHighlightMaterial.tres" id="5_tf5by"]
 [ext_resource type="Texture2D" uid="uid://bwbm4lg7timgp" path="res://Assets/Entities/NPC/spritesheet 5.png" id="6_p11bd"]
 [ext_resource type="Texture2D" uid="uid://c2v1xv5dr25ni" path="res://Assets/Entities/NPC/spritesheet 4.png" id="6_wnih7"]
 [ext_resource type="Texture2D" uid="uid://dlevmf43v06b4" path="res://Assets/Entities/NPC/spritesheet 8.png" id="7_dboh1"]
+[ext_resource type="AudioStream" uid="uid://c001y0v82jdo0" path="res://Assets/Entities/Player/sounds/MAGEvil_Devil Soul Suck_MR_SACRFCE.ogg" id="13_huacp"]
+[ext_resource type="AudioStream" uid="uid://c65oqvf1han7a" path="res://Assets/Entities/Player/sounds/VOXScrm_Death 01_MR_SACRFCE.ogg" id="14_0adj3"]
+[ext_resource type="AudioStream" uid="uid://beb5rrx1n81hg" path="res://Assets/Entities/Player/sounds/VOXScrm_Death 02_MR_SACRFCE.ogg" id="15_2jvjc"]
+[ext_resource type="AudioStream" uid="uid://c0ejs1wasanr" path="res://Assets/Entities/Player/sounds/VOXScrm_Death 03_MR_SACRFCE.ogg" id="16_xmmnq"]
+[ext_resource type="AudioStream" uid="uid://cjke1pukcem8w" path="res://Assets/Entities/Player/sounds/VOXScrm_Death 04_MR_SACRFCE.ogg" id="17_80foq"]
+[ext_resource type="Texture2D" uid="uid://c6cbh5m8r3wd2" path="res://Assets/Entities/NPC/spritesheet 10.png" id="18_x2iv4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1oa5l"]
 atlas = ExtResource("3_q8paq")
@@ -107,11 +118,128 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gl8ut"]
-radius = 20.0
+radius = 29.1786
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p1xgt"]
+streams_count = 4
+stream_0/stream = ExtResource("14_0adj3")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("15_2jvjc")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("16_xmmnq")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("17_80foq")
+stream_3/weight = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g62lw"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(0, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipppo"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(142, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58s3o"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(284, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sgjb"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(426, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csmw5"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(568, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_un8lr"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(710, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onxdy"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(852, 0, 142, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hx50x"]
+atlas = ExtResource("18_x2iv4")
+region = Rect2(994, 0, 142, 74)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dq6al"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g62lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipppo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58s3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sgjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csmw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_un8lr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onxdy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hx50x")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
 
 [node name="NPC" type="CharacterBody2D"]
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_fwa7v")
+ProgrammerAudio = Array[AudioStream]([ExtResource("2_34an0"), ExtResource("3_kjfh1")])
+SoundAudio = Array[AudioStream]([ExtResource("4_it710"), ExtResource("4_it710")])
+GraphicsAudio = Array[AudioStream]([ExtResource("2_371i8"), ExtResource("3_auh1p")])
 
 [node name="Icon" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -123,6 +251,7 @@ animation = &"5"
 shape = SubResource("CircleShape2D_gl8ut")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 0)
 offset_left = -100.0
 offset_top = 27.0
@@ -150,3 +279,23 @@ vertical_alignment = 1
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
 avoidance_enabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+volume_db = -10.0
+attenuation = 6.96439
+
+[node name="Suck" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("13_huacp")
+
+[node name="Scream" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_p1xgt")
+
+[node name="SoulSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(45, 5)
+sprite_frames = SubResource("SpriteFrames_dq6al")
+frame = 11
+frame_progress = 1.0

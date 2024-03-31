@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bbibmr4pptn6q"
+path="res://.godot/imported/AMBMisc-PROGRAMMER_Coding_MR_SACRFCE, looping.ogg-49a0354060cf6036e98e03998eed0132.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/NPC/audio/AMBMisc-PROGRAMMER_Coding_MR_SACRFCE, looping.ogg"
+dest_files=["res://.godot/imported/AMBMisc-PROGRAMMER_Coding_MR_SACRFCE, looping.ogg-49a0354060cf6036e98e03998eed0132.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cjke1pukcem8w"
+path="res://.godot/imported/VOXScrm_Death 04_MR_SACRFCE.ogg-ff5fe95a9253664416d89e69dcbae3db.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/Player/sounds/VOXScrm_Death 04_MR_SACRFCE.ogg"
+dest_files=["res://.godot/imported/VOXScrm_Death 04_MR_SACRFCE.ogg-ff5fe95a9253664416d89e69dcbae3db.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

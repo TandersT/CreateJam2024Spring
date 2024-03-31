@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class DialogueUI : Control, IResetable
@@ -38,30 +39,35 @@ public partial class DialogueUI : Control, IResetable
 			Reset();
 		};
 
-		KillButton.Pressed += () =>
-		{
-			ActiveNpc.OnKilled();
-			Global.GameState = GameStateEnum.KillingSelected;
-			Global.RoundCount++;
-			if (Global.RoundCount < Global.MaxRoundCount)
-			{
-				Global.GameState = GameStateEnum.RoundFinished;
-			}
-			else
-			{
-				if (Global.Score >= Global.DesiredScore)//TODO ADD OPTION TO LOSE
-				{
-					Global.GameState = GameStateEnum.EndCutsceneWin;
-				}
-				else
-				{
-					Global.GameState = GameStateEnum.EndCutsceneLose;
-				}
-			}
-		};
+		KillButton.Pressed += () => KillButtonPressed();
 
 		Global.OnGameStateChangedDelegate += OnGamestateChanged;
 
+	}
+
+	public async void KillButtonPressed()
+	{
+		ActiveNpc.OnKilled();
+		KillButton.Disabled = true;
+		await Task.Delay(3000);
+		Global.GameState = GameStateEnum.KillingSelected;
+		Global.RoundCount++;
+		Global.RoundDuration -= 10;
+		if (Global.RoundCount < Global.MaxRoundCount)
+		{
+			Global.GameState = GameStateEnum.RoundFinished;
+		}
+		else
+		{
+			if (Global.Score >= Global.DesiredScore)
+			{
+				Global.GameState = GameStateEnum.EndCutsceneWin;
+			}
+			else
+			{
+				Global.GameState = GameStateEnum.EndCutsceneLose;
+			}
+		}
 	}
 
 	public override void _Input(InputEvent @event)
@@ -118,6 +124,7 @@ public partial class DialogueUI : Control, IResetable
 		Pry.Modulate = Pry.Modulate with { A = 0 };
 		Pry.Disabled = true;
 		DontPry.Disabled = true;
+		KillButton.Disabled = false;
 
 
 	}

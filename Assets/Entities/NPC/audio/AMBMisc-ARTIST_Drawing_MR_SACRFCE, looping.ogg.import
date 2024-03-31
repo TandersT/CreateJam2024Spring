@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cuyc1f4xggso"
+path="res://.godot/imported/AMBMisc-ARTIST_Drawing_MR_SACRFCE, looping.ogg-eeecac323322f1ee6828cf900eefa78a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Entities/NPC/audio/AMBMisc-ARTIST_Drawing_MR_SACRFCE, looping.ogg"
+dest_files=["res://.godot/imported/AMBMisc-ARTIST_Drawing_MR_SACRFCE, looping.ogg-eeecac323322f1ee6828cf900eefa78a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
