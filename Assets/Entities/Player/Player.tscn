@@ -1,9 +1,10 @@
-[gd_scene load_steps=71 format=3 uid="uid://caqpwuoooxnw4"]
+[gd_scene load_steps=75 format=3 uid="uid://caqpwuoooxnw4"]
 
 [ext_resource type="Script" path="res://Assets/Player.cs" id="1_dpp0o"]
 [ext_resource type="Texture2D" uid="uid://1i06m4jbsqq4" path="res://Assets/Entities/Player/spritesheet 3.png" id="2_xjxct"]
 [ext_resource type="Texture2D" uid="uid://dxuv4jkvg1yxm" path="res://Assets/Entities/Player/spritesheet 9.png" id="3_br0nm"]
 [ext_resource type="AudioStream" uid="uid://dl7tskj4lr218" path="res://Assets/Entities/Player/Footsteps/FEETHmn_Concrete 01_MR_SACRFCE.ogg" id="4_mvs5f"]
+[ext_resource type="Texture2D" uid="uid://xhviseqjwnms" path="res://Assets/Entities/NPC/spritesheet 11.png" id="4_tpqi4"]
 [ext_resource type="Script" path="res://addons/trail_2d/trail_2d.gd" id="4_y2mvd"]
 [ext_resource type="AudioStream" uid="uid://cwjryighkl7ut" path="res://Assets/Entities/Player/Footsteps/FEETHmn_Concrete 02_MR_SACRFCE.ogg" id="5_0b7ug"]
 [ext_resource type="AudioStream" uid="uid://dairxtrjis3t7" path="res://Assets/Entities/Player/Footsteps/FEETHmn_Concrete 03_MR_SACRFCE.ogg" id="6_bpfta"]
@@ -56,6 +57,23 @@ tracks/0/keys = {
 "values": [&"down"]
 }
 
+[sub_resource type="Animation" id="Animation_637cw"]
+resource_name = "down_demon"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"demon_down"]
+}
+
 [sub_resource type="Animation" id="Animation_d5an4"]
 resource_name = "idle"
 length = 0.001
@@ -71,6 +89,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"idle"]
+}
+
+[sub_resource type="Animation" id="Animation_uubwb"]
+resource_name = "idle_demon"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"demon_idle"]
 }
 
 [sub_resource type="Animation" id="Animation_gvi83"]
@@ -124,23 +159,6 @@ tracks/0/keys = {
 "values": [&"up"]
 }
 
-[sub_resource type="Animation" id="Animation_g7p52"]
-resource_name = "walking"
-length = 0.33
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../AudioStreamPlayer:playing")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="Animation" id="Animation_2cl2t"]
 resource_name = "up_demon"
 length = 0.001
@@ -158,27 +176,26 @@ tracks/0/keys = {
 "values": [&"demon_up"]
 }
 
-[sub_resource type="Animation" id="Animation_637cw"]
-resource_name = "down_demon"
-length = 0.001
+[sub_resource type="Animation" id="Animation_g7p52"]
+resource_name = "walking"
+length = 0.33
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
+tracks/0/path = NodePath("../AudioStreamPlayer:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"demon_down"]
+"values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_uubwb"]
-resource_name = "idle_demon"
-length = 0.001
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_5tysy"]
+resource_name = "suck_demon"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -189,7 +206,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"demon_idle"]
+"values": [&"demon_suck"]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_25soa"]
@@ -201,36 +218,10 @@ _data = {
 "idle_demon": SubResource("Animation_uubwb"),
 "left": SubResource("Animation_gvi83"),
 "right": SubResource("Animation_5ohy0"),
+"suck_demon": SubResource("Animation_5tysy"),
 "up": SubResource("Animation_jb6qd"),
 "up_demon": SubResource("Animation_2cl2t"),
 "walking": SubResource("Animation_g7p52")
-}
-
-[sub_resource type="Animation" id="Animation_l0n0a"]
-resource_name = "Text"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Speech:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Speech:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.241484, 1),
-"update": 0,
-"values": [Vector2(-4.61539, 137.692), Vector2(-4.61539, -216.154)]
 }
 
 [sub_resource type="Animation" id="Animation_ol4bi"]
@@ -258,6 +249,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-4.61539, -216.154)]
+}
+
+[sub_resource type="Animation" id="Animation_l0n0a"]
+resource_name = "Text"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.241484, 1),
+"update": 0,
+"values": [Vector2(-4.61539, 137.692), Vector2(-4.61539, -216.154)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f7t8a"]
@@ -339,9 +357,8 @@ blend_point_4/pos = Vector2(0, 0)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_2bajd"]
-graph_offset = Vector2(-48.9031, 27.6036)
 nodes/movement/node = SubResource("AnimationNodeBlendSpace2D_xqs3w")
-nodes/movement/position = Vector2(440, 80)
+nodes/movement/position = Vector2(240, 60)
 nodes/output/position = Vector2(680, 80)
 node_connections = [&"output", 0, &"movement"]
 
@@ -372,6 +389,14 @@ region = Rect2(0, 0, 240, 175)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kby1e"]
 atlas = ExtResource("3_br0nm")
 region = Rect2(240, 0, 240, 175)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flmqp"]
+atlas = ExtResource("4_tpqi4")
+region = Rect2(0, 0, 241, 175)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5mtb"]
+atlas = ExtResource("4_tpqi4")
+region = Rect2(241, 0, 241, 175)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bapst"]
 atlas = ExtResource("3_br0nm")
@@ -480,6 +505,47 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5mtb")
+}],
+"loop": false,
+"name": &"demon_suck",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_bapst")
 }, {
 "duration": 1.0,
@@ -580,7 +646,6 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb1cr"]
-radius = 20.7122
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6u517"]
 streams_count = 6
@@ -604,6 +669,7 @@ DashSpeed = 5000
 DashTaperSpeed = 0.75
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 root_node = NodePath("../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_25soa")
@@ -618,7 +684,7 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 unique_name_in_owner = true
 active = false
-root_node = NodePath("%AnimationTree/../Sprite")
+root_node = NodePath("%Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_25soa")
 }
@@ -630,13 +696,13 @@ parameters/movement/blend_position = Vector2(-0.0659341, 0.515152)
 [node name="AnimationTreeDemon" type="AnimationTree" parent="."]
 unique_name_in_owner = true
 active = false
-root_node = NodePath("%AnimationTreeDemon/../Sprite")
+root_node = NodePath("%Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_25soa")
 }
 tree_root = SubResource("AnimationNodeBlendTree_2bajd")
 anim_player = NodePath("../AnimationPlayer")
-parameters/movement/blend_position = Vector2(-0.406593, 0.461255)
+parameters/movement/blend_position = Vector2(-0.470696, 0.242774)
 
 [node name="Speech" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -659,11 +725,11 @@ autowrap_mode = 3
 visible_characters_behavior = 1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_pnkxp")
 animation = &"left"
 autoplay = "down"
-frame_progress = 0.442903
 
 [node name="Trail2D" type="Line2D" parent="Sprite"]
 show_behind_parent = true

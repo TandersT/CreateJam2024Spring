@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bkwxplbt0r442"
+path="res://.godot/imported/UIMisc-A_Ui Sound 01_MR_SCRFCE.ogg-b36a6586141b45d6c2c2471c7c63b19c.oggvorbisstr"
+
+[deps]
+
+source_file="res://ui/UIMisc-A_Ui Sound 01_MR_SCRFCE.ogg"
+dest_files=["res://.godot/imported/UIMisc-A_Ui Sound 01_MR_SCRFCE.ogg-b36a6586141b45d6c2c2471c7c63b19c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

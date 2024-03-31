@@ -82,6 +82,7 @@ public static class Global
     public static int SoundDesignerScore { get; internal set; }
     public static int ProgrammerScore { get; internal set; }
 
+    public static List<Tween> tweens = new List<Tween>();
 
     public delegate void InteractDelegate(Npc npc);
     public static event InteractDelegate OnInteractDelegate;

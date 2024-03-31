@@ -196,7 +196,7 @@ public partial class Npc : CharacterBody2D
                 break;
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             var list = SetupDialog(i, generalLines, greetingLines, proficiencyLines, roleLines);
             var index = Helper.RandomInt(0, list.Count);
@@ -236,7 +236,7 @@ public partial class Npc : CharacterBody2D
         CommuncationTypeEnum chosenType = Helper.GetRandomEnumValue<CommuncationTypeEnum>(FilledCommuncationTypes.ToArray());
         if (index == 0)
         {
-            chosenType = Helper.RandomFloat(0, 1f) > 0.7f ? CommuncationTypeEnum.Greeting : chosenType;
+            chosenType = Helper.RandomFloat(0, 1f) > 0.3f ? CommuncationTypeEnum.Greeting : chosenType;
         }
         switch (chosenType)
         {

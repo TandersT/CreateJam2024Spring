@@ -32,11 +32,12 @@ public partial class Player : CharacterBody2D, IResetable
     bool canDash = true;
     Npc closestNpc;
     Vector2 StartPosition;
+    AnimationPlayer AnimationPlayer => GetNode<AnimationPlayer>("%AnimationPlayer");
     AnimationTree AnimationTree => GetNode<AnimationTree>("%AnimationTree");
     AnimationTree AnimationTreeDemon => GetNode<AnimationTree>("%AnimationTreeDemon");
     AnimationPlayer Text => GetNode<AnimationPlayer>("%Text");
     Label SpeechLabel => GetNode<Label>("%SpeechLabel");
-
+    AnimatedSprite2D Sprite => GetNode<AnimatedSprite2D>("%Sprite");
 
     public override void _EnterTree()
     {
@@ -47,10 +48,12 @@ public partial class Player : CharacterBody2D, IResetable
                 case GameStateEnum.TalkingPhase:
                     AnimationTree.Active = true;
                     AnimationTreeDemon.Active = false;
+                    Sprite.Play("idle");
                     break;
                 case GameStateEnum.KillingPhase:
                     AnimationTreeDemon.Active = true;
                     AnimationTree.Active = false;
+                    Sprite.Play("demon_idle");
                     break;
             }
             if (gameState == GameStateEnum.TalkingPhase && Global.RoundCount == 0)
@@ -88,7 +91,7 @@ public partial class Player : CharacterBody2D, IResetable
             closest.RangeStatus = RangeStatusEnum.InsideFocus;
         }
         rest.ForEach(x => x.RangeStatus = RangeStatusEnum.InsideUnfocus);
-
+        var prevCurrent = closestNpc;
         UpdateClosestNpc();
         if (Global.GameState == GameStateEnum.KillingPhase ||
         Global.GameState == GameStateEnum.TalkingPhase)
@@ -100,7 +103,8 @@ public partial class Player : CharacterBody2D, IResetable
         }
         if (Global.GameState == GameStateEnum.KillingPhase)
         {
-            if (closestNpc != null && Global.DialogueUI.MenuOpen == false)
+            if (closestNpc != null && Global.DialogueUI.MenuOpen == false ||
+            prevCurrent != closestNpc && closestNpc != null && Global.DialogueUI.MenuOpen == false)
             {
                 closestNpc.OnInteractedWith();
             }
@@ -146,6 +150,7 @@ public partial class Player : CharacterBody2D, IResetable
             SpeechLabel.VisibleRatio = 0;
             SpeechLabel.Text = text[introSpeedIndex++];
             var tween = CreateTween();
+            Global.tweens.Add(tween);
             tween.TweenProperty(SpeechLabel, "visible_ratio", 1, SpeechLabel.Text.Length / 30f);
             tween.TweenInterval(2);
             tween.Finished += () => AdvanceText(text);
@@ -167,7 +172,6 @@ public partial class Player : CharacterBody2D, IResetable
         {
             if (Global.GameState == GameStateEnum.TalkingPhase)
             {
-
                 if (closestNpc != null && Global.DialogueUI.MenuOpen == false ||
                     closestNpc != null && closestNpc != Global.DialogueUI.ActiveNpc)
                 {
@@ -191,6 +195,12 @@ public partial class Player : CharacterBody2D, IResetable
         GlobalPosition = StartPosition;
         introSpeedIndex = 0;
         Text.Play("RESET");
+    }
+
+    public void Suck()
+    {
+        AnimationTreeDemon.Active = false;
+        AnimationPlayer.Play("suck_demon");
     }
 
 }

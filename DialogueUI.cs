@@ -1,4 +1,5 @@
 using System;
+using System.Runtime;
 using System.Threading.Tasks;
 using Godot;
 
@@ -49,6 +50,9 @@ public partial class DialogueUI : Control, IResetable
 	{
 		ActiveNpc.OnKilled();
 		KillButton.Disabled = true;
+
+		CreateTween().TweenProperty(Global.Player, "global_position", ActiveNpc.GlobalPosition + Vector2.Right * 125f + Vector2.Up * 40f, 1).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out).
+		Finished += () => Global.Player.Suck();;
 		await Task.Delay(3000);
 		Global.GameState = GameStateEnum.KillingSelected;
 		Global.RoundCount++;
@@ -204,6 +208,7 @@ public partial class DialogueUI : Control, IResetable
 		dialogieInProcess = true;
 
 		var tween = CreateTween();
+		Global.tweens.Add(tween);
 		tween.TweenProperty(CutsceneLabel, "visible_ratio", 1, text.Length / 50f);
 		tween.Finished += () =>
 		{

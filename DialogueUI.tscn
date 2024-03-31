@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmwnlec6crwfi"]
+[gd_scene load_steps=15 format=3 uid="uid://dmwnlec6crwfi"]
 
 [ext_resource type="Script" path="res://DialogueUI.cs" id="1_5yxoq"]
 [ext_resource type="FontFile" uid="uid://d257fd73snfk3" path="res://Assets/Fonts/Bleeding_Cowboys.ttf" id="2_s0yp3"]
 [ext_resource type="StyleBox" uid="uid://c68ivjmi1yvl6" path="res://Empty.tres" id="2_wvvwv"]
 [ext_resource type="FontFile" uid="uid://d3j1o50nmnjlc" path="res://Assets/Fonts/Montserrat-Medium.ttf" id="3_2ndkn"]
+[ext_resource type="Script" path="res://ButtonSound.cs" id="3_oet43"]
+[ext_resource type="AudioStream" uid="uid://bkwxplbt0r442" path="res://ui/UIMisc-A_Ui Sound 01_MR_SCRFCE.ogg" id="6_w2w8n"]
+[ext_resource type="AudioStream" uid="uid://c5cyh637kr17w" path="res://ui/UIMisc-A_Ui Sound 02_MR_SCRFCE.ogg" id="7_5rexs"]
+[ext_resource type="AudioStream" uid="uid://cjdvvysw3fnxm" path="res://ui/UIMisc-A_Ui Sound 03_MR_SCRFCE.ogg" id="8_cxx60"]
+[ext_resource type="AudioStream" uid="uid://dsfmxwmimbvwl" path="res://ui/clicka.ogg" id="9_6ey0o"]
+[ext_resource type="AudioStream" uid="uid://de5jvdjcvcd18" path="res://ui/clickb.ogg" id="10_kk2uc"]
+[ext_resource type="AudioStream" uid="uid://brfwaulo8xnjm" path="res://ui/clickc.ogg" id="11_rh4jh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsen0"]
 bg_color = Color(0.14902, 0.14902, 0.14902, 0.607843)
@@ -17,6 +24,24 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uuhih"]
+streams_count = 3
+stream_0/stream = ExtResource("6_w2w8n")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("7_5rexs")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("8_cxx60")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcrms"]
+streams_count = 3
+stream_0/stream = ExtResource("9_6ey0o")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_kk2uc")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("11_rh4jh")
+stream_2/weight = 1.0
 
 [node name="DialogueUI" type="Control"]
 layout_mode = 3
@@ -74,6 +99,7 @@ focus_neighbor_left = NodePath("../Pry")
 theme_override_font_sizes/font_size = 74
 text = "Don't
 Pry"
+script = ExtResource("3_oet43")
 
 [node name="CenterContainer" type="CenterContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/PryContainer"]
 layout_mode = 2
@@ -85,6 +111,9 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("3_2ndkn")
 theme_override_font_sizes/font_size = 38
 text = "asdasd"
 autowrap_mode = 3
@@ -98,6 +127,7 @@ size_flags_vertical = 4
 focus_neighbor_right = NodePath("../DontPry")
 theme_override_font_sizes/font_size = 74
 text = "Pry"
+script = ExtResource("3_oet43")
 
 [node name="CutsceneContainer" type="HBoxContainer" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
@@ -134,6 +164,7 @@ theme_override_styles/panel = ExtResource("2_wvvwv")
 [node name="KillButton" type="Button" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("3_oet43")
 
 [node name="KillLabel" type="RichTextLabel" parent="DialogueContainer/MarginContainer/PanelContainer/PanelContainer/MarginContainer/KillContainer/PanelContainer"]
 unique_name_in_owner = true
@@ -150,3 +181,13 @@ text = "[shake rate=20.0 level=15
 fit_content = true
 scroll_active = false
 visible_characters_behavior = 1
+
+[node name="hover" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_uuhih")
+volume_db = -10.0
+
+[node name="click" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_vcrms")
+volume_db = -10.0
